@@ -1,0 +1,1 @@
+<img src="<?php echo base_url()?>images/error_404.png" class="img-responsive center-block" alt="Error 404">

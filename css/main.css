@@ -1,0 +1,62 @@
+.btn-login {
+   background-color: #49afcd;
+   background-image: linear-gradient(to bottom, #5bc0de, #2f96b4);
+   background-repeat: repeat-x;
+   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+   color: #fff;
+   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn-login:hover {
+  background-color: #2f96b4;
+  background-position: 0 -15px;
+  border-color: #2f96b4;  
+  color: #fff;
+}
+
+a {
+  color: #710100;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.alert-danger {
+    background-color: #ff4141;
+    color: white;
+}
+
+.page-header {  
+  margin: 10px 0 10px;
+}
+
+.well {
+  background-color: #A30A16;
+  margin-bottom: 10px;
+}
+
+
+/*
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+
+
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-cancel {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-cancel:hover {
+  color: #fff;
+  background-color: #c9302c;
+  border-color: #761c19;
+}*/
