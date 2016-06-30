@@ -18,6 +18,11 @@
       return($this->db->insert_id());
     }
 
+    /* se cierra la sesión actual */
+    public function close_session() {      
+      return $this->session->sess_destroy();
+    }
+
     /* busca un usuario por dni */
     function get_user_dni($dni){
       $this->db->select('id');
@@ -32,6 +37,14 @@
       $this->db->where('user',$user_name);
       $query = $this->db->get('user');
       return($query->result());
+    }
+
+    /* retorna la cantidad de solicitudes para un usuario */
+    function count_requests ($user_id){      
+      $this->db->from('user');
+      $this->db->join('request', 'user_id = user.id');
+      $this->db->where('user.id',$user_id);
+      return($this->db->count_all_results());
     }
 }
 ?> 
