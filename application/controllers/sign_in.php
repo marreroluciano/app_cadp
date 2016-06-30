@@ -8,15 +8,16 @@
       $this->load->library('session');
     }
       
-   function index () {     
+   function index () {    
      if (!$this->user_model->isLogin()) {
        $datos_layout["title"]   = "CADP - Ingreso al sistema";
        $datos_layout["content"] = $this->load->view('sign_in_view', '', true);
        $this->load->view('layout_view', $datos_layout);
       } else {
+         $data_view['count_requests'] = $this->user_model->count_requests($this->session->userdata['id']);
          $datos_layout["title"]   = "CADP";
          $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
-         $datos_layout["content"] = $this->load->view('user/initial_user_view','', true);
+         $datos_layout["content"] = $this->load->view('user/initial_user_view', $data_view, true);
          $this->load->view('layout_view', $datos_layout);
       }
    }
@@ -30,9 +31,10 @@
          $data_session = array('id' => $user[0]->id,'user' => $user[0]->user);
          $this->session->set_userdata($data_session);
 
+         $data_view['count_requests'] = $this->user_model->count_requests($user[0]->id);
          $datos_layout["title"]   = "CADP";
          $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
-         $datos_layout["content"] = $this->load->view('user/initial_user_view','', true);
+         $datos_layout["content"] = $this->load->view('user/initial_user_view', $data_view, true);
          $this->load->view('layout_view', $datos_layout);
        } else {
             $data_view['login_error'] = 1;
@@ -43,20 +45,11 @@
      } else { redirect(base_url().'sign_in', 'refresh');}
    }
    
-   function destroy() {
-     //destruimos la sesión
-     /* 
-     $this->load->model('usuario_model');
-     $this->usuario_model->close();
-
-     $datos_content['usuario_value'] = '';
-     $datos_content['clave_value']   = '';
-     $datos_content['isLogin']       = false;
-
-     $datos_layout["title"] = "Sesión finalizada";
-     $datos_layout["content"] = $this->load->view('sign_in_view', $datos_content, true);
-     $this->load->view('layout_view', $datos_layout);  */
-     
+   function close_session() {
+     $this->user_model->close_session();
+     $datos_layout["title"]   = "CADP - Ingreso al sistema";
+     $datos_layout["content"] = $this->load->view('sign_in_view', '', true);
+     $this->load->view('layout_view', $datos_layout);
    }
 
    /* solicitud de registro */
