@@ -8,9 +8,9 @@
         <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="<?php echo base_url();?>sign_in/" title="Inicio"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
-            <li><a href="<?php echo base_url();?>request/" title="Solicitudes"><i class="fa fa-inbox" aria-hidden="true"></i> Solicitudes</a></li>
-            <li><a href="#contact"><i class="fa fa-envelope" aria-hidden="true"></i> Contacto</a></li>            
+            <li class="active" id="start"><a href="<?php echo base_url();?>sign_in/" title="Inicio"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+            <li id="request"><a href="<?php echo base_url();?>request/" title="Solicitudes"><i class="fa fa-inbox" aria-hidden="true"></i> Solicitudes</a></li>
+            <li id="contact"><a href="#contact"><i class="fa fa-envelope" aria-hidden="true"></i> Contacto</a></li>            
           </ul>
           <!--
           <form class="navbar-form navbar-left" role="search">
