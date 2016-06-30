@@ -13,21 +13,21 @@
 <div class="col-xs-12">
   <?php $attributes = array('class' => 'form-horizontal', 'role'=>'form', 'id' => 'form'); ?>
   <?php echo form_open('', $attributes); ?>
-  <ul class="nav nav-tabs">
-  <li class="active"><a href="#panel_new_user" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Datos de usuario</a></li>
-  </ul>
-  <div class="tab-content"> <!--Contenedor de los paneles -->
-    <hr/>
-    <div class="tab-pane active" id="panel_new_user">
-      <div class="col-xs-6">
 
+  <div class="panel panel-default">
+  <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Datos de usuario</div>
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-xs-6">
+        
         <div class="form-group form-group-sm">
           <?=form_label('<small> DNI </small>', 'dni', $atr_label); ?>
           <div class="col-sm-8">            
             <?php $atributes = array('type'=>'text', 'id' => 'dni', 'name' => 'dni', 'placeholder' => 'DNI', 'class' => 'form-control', 'maxlength' => 20); ?>
             <?=form_input($atributes); ?>
           </div>
-        </div>        
+        </div>
 
         <div class="form-group form-group-sm">
           <?=form_label('<small> Apellido y Nombre </small>', 'name', $atr_label); ?>
@@ -43,12 +43,11 @@
             <?php $atributes = array('type'=>'email', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Correo electr&oacute;nico', 'class' => 'form-control', 'maxlength' => 50); ?>
             <?=form_input($atributes); ?>
           </div>
-        </div>   
+        </div>
 
       </div>
-
       <div class="col-xs-6">
-
+        
         <div class="form-group form-group-sm">
           <?=form_label('<small> Usuario </small>', 'user', $atr_label); ?>
           <div class="col-sm-8">
@@ -71,10 +70,12 @@
             <?php $atributes = array('type'=>'password', 'id' => 'confirm_pass', 'name' => 'confirm_pass', 'placeholder' => 'Confirmar contrase&ntilde;a del nuevo usuario', 'class' => 'form-control', 'maxlength' => 10); ?>
             <?=form_input($atributes); ?>
           </div>
-        </div>        
-      </div>
+        </div>
 
+      </div>
     </div>  
+    
+  </div>
   </div>
 
   <div class="row"> 
