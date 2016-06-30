@@ -29,7 +29,7 @@
   <div class="form-group form-group-sm">
     <label for="clave" class="col-sm-4 control-label"></label>
     <div class="col-sm-8">
-      <button type="submit" class="btn btn-login" title="Ingresar al Sistema"><i class="glyphicon glyphicon-log-in"></i> Ingresar</button>
+      <button type="submit" class="btn btn-login" title="Ingresar al Sistema"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresar</button>
     </div>
   </div>
 
