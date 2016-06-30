@@ -68,3 +68,8 @@ function ajax_method(url, controller, method){
     }
   });
 }
+
+/* cambia el atributto class de un tag */
+function change_class(tag_id, new_class){  
+  $('#'+tag_id).attr('class', new_class);
+}
