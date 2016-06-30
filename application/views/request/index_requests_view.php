@@ -40,3 +40,10 @@
   
 </div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    change_class('request', 'active');
+    change_class('start', '');
+    change_class('contact', '');
+  });
+</script>
