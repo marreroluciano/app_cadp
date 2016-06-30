@@ -32,7 +32,7 @@
           <?=form_label('<small> Fecha desde </small>', 'tipo_doc', $atr_label); ?>
           <div class="col-sm-8">
             <div class='input-group date' id='date_from'>
-              <input type='text' id="value_date_from" name="date_from" class="form-control" readonly/>
+              <input type='text' id="value_date_from" name="value_date_from" class="form-control"/>
               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
               </span>
             </div>
@@ -44,7 +44,7 @@
     </div>      
   </div>
   </div>
-    
+
   <div class="row"> 
   <div class="col-xs-12">
     <?php $attributes = array('name' => 'accept', 'id' => 'accept', 'type' => 'button', 'class' => 'btn btn-success', 'content' => '<span class="glyphicon glyphicon-ok"></span> Aceptar', 'onClick' => '', 'title' => 'Aceptar');?>
@@ -81,7 +81,8 @@
    
    $('#date_from').datepicker({
      format: 'dd/mm/yyyy',     
-     language: 'es'
+     language: 'es',          
+     autoclose: true     
      //dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
    });
 
