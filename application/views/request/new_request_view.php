@@ -10,13 +10,11 @@
 <div class="col-xs-12">
   <?php $attributes = array('class' => 'form-horizontal', 'role'=>'form', 'id' => 'form_request'); ?>
   <?php echo form_open('', $attributes); ?>
-  <ul class="nav nav-tabs">
-  <li class="active"><a href="#panel_new_request" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Nueva solicitud</a></li>
-  </ul>
-  <div class="tab-content"> <!--Contenedor de los paneles -->
-    <hr/>
-    <div class="tab-pane active" id="panel_new_request">
 
+  <div class="panel panel-default">
+  <div class="panel-heading"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Datos de la solicitud </div>
+  <div class="panel-body">
+    <div class="row">
       <div class="col-xs-6">
         <div class="form-group form-group-sm">
           <?=form_label('<small> Tipo solicitud </small>', 'tipo_doc', $atr_label); ?>
@@ -30,26 +28,23 @@
           <?=form_dropdown('request_types', $options, '', 'class="form-control" id="request_types"'); ?>
           </div>
         </div>
-
         <div class="form-group form-group-sm">
           <?=form_label('<small> Fecha desde </small>', 'tipo_doc', $atr_label); ?>
           <div class="col-sm-8">
             <div class='input-group date' id='date_from'>
               <input type='text' id="value_date_from" name="date_from" class="form-control" readonly/>
               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-              </span>  
-            </div>          
+              </span>
+            </div>
           </div>
-        </div>    
-        
-
+        </div>
       </div>
-      <div class="col-xs-6">        
-        
+      <div class="col-xs-6">
       </div>
-    </div>  
+    </div>      
   </div>
-
+  </div>
+    
   <div class="row"> 
   <div class="col-xs-12">
     <?php $attributes = array('name' => 'accept', 'id' => 'accept', 'type' => 'button', 'class' => 'btn btn-success', 'content' => '<span class="glyphicon glyphicon-ok"></span> Aceptar', 'onClick' => '', 'title' => 'Aceptar');?>
@@ -80,8 +75,9 @@
 <!-- recuperamos los datos del paciente si es que existe -->
 <script type="text/javascript">
   $(document).ready(function(){
-
-   
+   change_class('request', 'active');
+   change_class('start', '');
+   change_class('contact', ''); 
    
    $('#date_from').datepicker({
      format: 'dd/mm/yyyy',     
@@ -89,16 +85,10 @@
      //dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
    });
 
-
-
-
-    $("#").change(function(){      
-    });
-
-    $( "input" ).keypress(function( event ) {
-      if ( event.which == 13 ) {
-        event.preventDefault();
-      }      
-    });
+   $( "input" ).keypress(function( event ) {
+     if ( event.which == 13 ) {
+       event.preventDefault();
+     }      
+   });
   });
 </script>
