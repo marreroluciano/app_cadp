@@ -19,7 +19,8 @@
   <link rel="stylesheet" href="<?php echo base_url()?>js/alertify/css/themes/default.min.css" type="text/css"/>
   <link rel="stylesheet" href="<?php echo base_url()?>js/alertify/css/themes/semantic.min.css" type="text/css"/>  
   <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap.min.css" type="text/css"/>
-  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap-datepicker.min.css" type="text/css"/>  
+  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap-datepicker.min.css" type="text/css"/>
+  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap-datepicker.css" type="text/css"/>    
   <link rel="stylesheet" href="<?php echo base_url()?>css/main.css" type="text/css"/>
   <link rel="stylesheet" href="<?php echo base_url()?>css/user.css" type="text/css"/>
   <link rel="stylesheet" href="<?php echo base_url()?>css/font-awesome.min.css">
@@ -35,7 +36,7 @@
   <title><?=$title?></title>
 </head>
 <body>
-  <div class="container"> 
+  <div class="container">      
     <div class="row">
       <div class="col-xs-12">
         <div class="page-header well well-sm">
@@ -53,6 +54,5 @@
     <?=$content;?>    
   </div>  
   <hr/>
-
 </body>
 </html> 
