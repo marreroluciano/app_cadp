@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-xs-3"><i class="fa fa-inbox fa-5x"></i></div>
         <div class="col-xs-9 text-right">
-          <div class="huge">3</div>
+          <div class="huge"><?=$count_requests;?></div>
           <div>Mis solicitudes</div>
         </div>
       </div>
