@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="form-group form-group-sm">
-          <?=form_label('<small> Fecha desde </small>', 'tipo_doc', $atr_label); ?>
+          <?=form_label('<small> Fecha desde </small>', 'date_from', $atr_label); ?>
           <div class="col-sm-8">
             <div class='input-group date' id='date_from'>
               <input type='text' id="value_date_from" name="value_date_from" class="form-control"/>
@@ -38,8 +38,26 @@
             </div>
           </div>
         </div>
+
+        <div class="form-group form-group-sm">          
+          <?=form_label('<small> Fecha hasta </small>', 'date_end', $atr_label); ?>
+          <div class="col-sm-8">
+            <div class='input-group date' id='date_end'>
+              <input type='text' id="value_date_end" name="value_date_from" class="form-control"/>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-xs-6">
+      <div class="col-xs-6">          
+        <div class="form-group form-group-sm">          
+          <?=form_label('<small> Certificado </small>', 'certificate', $atr_label); ?>
+          <div class="col-sm-8">
+            <input type='file' id="certificate" name="file-es[]" class="form-control" data-preview-file-type="text"/>
+          </div>
+        </div>
+        
       </div>
     </div>      
   </div>
@@ -73,18 +91,24 @@
 </div><!-- /.modal -->
 
 <!-- recuperamos los datos del paciente si es que existe -->
-<script type="text/javascript">
+<script type="text/javascript">  
   $(document).ready(function(){
    change_class('request', 'active');
    change_class('start', '');
-   change_class('contact', ''); 
+   change_class('contact', '');
+
+   $("#certificate").fileinput({showPreview: false, showUpload: false, showCaption: true, overwriteInitial: false, language: 'es', browseClass: "btn btn-primary btn-sm", removeClass: "btn btn-danger btn-sm" , allowedFileExtensions: ['jpg', 'png','gif']});
    
-   $('#date_from').datepicker({
+   $('#date_from, #date_end').datepicker({
      format: 'dd/mm/yyyy',     
-     language: 'es',          
+     language: 'es',            
      autoclose: true     
-     //dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
    });
+
+   var date = new Date();
+   var str_date =  date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+
+   $('#value_date_from, #value_date_end').val(str_date);
 
    $( "input" ).keypress(function( event ) {
      if ( event.which == 13 ) {
