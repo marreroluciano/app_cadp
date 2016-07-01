@@ -13,6 +13,8 @@
   <script src="<?php echo base_url()?>css/bootstrap/js/bootstrap-datepicker.es.min.js"></script>
   <script src="<?php echo base_url()?>js/alertify/alertify.min.js"></script>
   <script src="<?php echo base_url()?>css/bootstrap/js/moment.min.js"></script>
+  <script src="<?php echo base_url()?>css/bootstrap/js/fileinput.min.js"></script>
+  <script src="<?php echo base_url()?>css/bootstrap/js/locales/es.js"></script>
   
   <!-- CSS -->  
   <link rel="stylesheet" href="<?php echo base_url()?>js/alertify/css/alertify.min.css" type="text/css"/>
@@ -20,10 +22,11 @@
   <link rel="stylesheet" href="<?php echo base_url()?>js/alertify/css/themes/semantic.min.css" type="text/css"/>  
   <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap.min.css" type="text/css"/>
   <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap-datepicker.min.css" type="text/css"/>
-  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap-datepicker.css" type="text/css"/>    
+  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap-datepicker.css" type="text/css"/>  
   <link rel="stylesheet" href="<?php echo base_url()?>css/main.css" type="text/css"/>
   <link rel="stylesheet" href="<?php echo base_url()?>css/user.css" type="text/css"/>
   <link rel="stylesheet" href="<?php echo base_url()?>css/font-awesome.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/fileinput.min.css" type="text/css"/>
 
   
   <script type="text/javascript">
