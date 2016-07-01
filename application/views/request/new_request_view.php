@@ -38,7 +38,6 @@
             </div>
           </div>
         </div>
-
         <div class="form-group form-group-sm">          
           <?=form_label('<small> Fecha hasta </small>', 'date_end', $atr_label); ?>
           <div class="col-sm-8">
@@ -48,13 +47,19 @@
               </span>
             </div>
           </div>
-        </div>
+        </div>        
       </div>
-      <div class="col-xs-6">          
+      <div class="col-xs-6">
         <div class="form-group form-group-sm">          
           <?=form_label('<small> Certificado </small>', 'certificate', $atr_label); ?>
           <div class="col-sm-8">
             <input type='file' id="certificate" name="file-es[]" class="form-control" data-preview-file-type="text"/>
+          </div>
+        </div>
+        <div class="form-group form-group-sm">          
+          <?=form_label('<small> Comentarios </small>', 'certificate', $atr_label); ?>
+          <div class="col-sm-8">
+            <?=form_textarea('comments', set_value(''), 'class="form-control" style="height:77px;" id="comments"');?>  
           </div>
         </div>
         
