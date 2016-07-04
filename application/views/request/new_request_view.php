@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-xs-6">
         <div class="form-group form-group-sm">
-          <?=form_label('<small> Tipo solicitud </small>', 'tipo_doc', $atr_label); ?>
+          <?=form_label('<small> Tipo solicitud </small>', 'request_types', $atr_label); ?>
           <div class="col-sm-8">
           <?php
             $options = array();
@@ -28,7 +28,7 @@
           <?=form_dropdown('request_types', $options, '', 'class="form-control" id="request_types"'); ?>
           </div>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm" id="form_group_date_from">
           <?=form_label('<small> Fecha desde </small>', 'date_from', $atr_label); ?>
           <div class="col-sm-8">
             <div class='input-group date' id='date_from'>
@@ -38,11 +38,11 @@
             </div>
           </div>
         </div>
-        <div class="form-group form-group-sm">          
+        <div class="form-group form-group-sm" id="form_group_date_end">
           <?=form_label('<small> Fecha hasta </small>', 'date_end', $atr_label); ?>
           <div class="col-sm-8">
             <div class='input-group date' id='date_end'>
-              <input type='text' id="value_date_end" name="value_date_from" class="form-control"/>
+              <input type='text' id="value_date_end" name="value_date_end" class="form-control"/>
               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
               </span>
             </div>
@@ -102,6 +102,9 @@
    change_class('start', '');
    change_class('contact', '');
 
+   $('#form_group_date_from').hide();
+   $('#form_group_date_end').hide();
+
    $("#certificate").fileinput({showPreview: false, showUpload: false, showCaption: true, overwriteInitial: false, language: 'es', browseClass: "btn btn-primary btn-sm", removeClass: "btn btn-danger btn-sm" , allowedFileExtensions: ['jpg', 'png','gif']});
    
    $('#date_from, #date_end').datepicker({
@@ -112,7 +115,6 @@
 
    var date = new Date();
    var str_date =  date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
-
    $('#value_date_from, #value_date_end').val(str_date);
 
    $( "input" ).keypress(function( event ) {
@@ -120,5 +122,18 @@
        event.preventDefault();
      }      
    });
+
+   $( "#request_types" ).change(function() {
+     var value = $('#request_types').val();
+     if (value == 1) {
+       $('#form_group_date_from').hide('slow');
+       $('#form_group_date_end').hide('slow');
+     } else {
+       $('#form_group_date_from').show('slow');
+       $('#form_group_date_end').show('slow');
+     }
+
+   });
+
   });
 </script>
