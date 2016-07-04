@@ -28,6 +28,20 @@
           <?=form_dropdown('request_types', $options, '', 'class="form-control" id="request_types"'); ?>
           </div>
         </div>
+
+        <div class="form-group form-group-sm" id="form_group_turns">
+          <?=form_label('<small> Turno elegido </small>', 'turns', $atr_label); ?>
+          <div class="col-sm-8">
+          <?php
+            $options = array();
+            foreach ($turns as $key => $value):
+              $options[$turns[$key]->id] = $turns[$key]->detail.': '.$turns[$key]->day_hour;
+            endforeach;
+          ?>
+          <?=form_dropdown('turns', $options, '', 'class="form-control" id="turns"'); ?>
+          </div>
+        </div>                
+
         <div class="form-group form-group-sm" id="form_group_date_from">
           <?=form_label('<small> Fecha desde </small>', 'date_from', $atr_label); ?>
           <div class="col-sm-8">
@@ -125,15 +139,15 @@
 
    $( "#request_types" ).change(function() {
      var value = $('#request_types').val();
-     if (value == 1) {
+     if (value == 1) {      
+       $('#form_group_turns').show('slow');
        $('#form_group_date_from').hide('slow');
        $('#form_group_date_end').hide('slow');
      } else {
+       $('#form_group_turns').hide('slow');
        $('#form_group_date_from').show('slow');
        $('#form_group_date_end').show('slow');
      }
-
    });
-
   });
 </script>
