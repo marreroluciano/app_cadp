@@ -1,4 +1,9 @@
 
+/* cambia el atributto class de un tag */
+function change_class(tag_id, new_class){
+  $('#'+tag_id).attr('class', new_class);
+}
+
 /* verifica si existe un usuario por dni */
 function get_alerts(url, controller, method, model_method, value){
   var parameters = {
@@ -48,6 +53,46 @@ function verify_new_user_data(url){
   }).set('modal', true);
 }
 
+/* comprueba los datos mínimos del formulario de solicitudes */
+function verify_new_request(url){
+  var input = document.querySelectorAll("input");
+  for (i = 0; i < input.length; i++) {
+    var value = input[i].value;    
+    if (value.trim().length < 1){
+      $( "#form_group_certificate" ).addClass( "has-error" );
+      $( "#certificate" ).focus();
+      alertify.notify('Faltan completar campos en el formulario. Verifique si ha adjuntado un certificado.', 'error', 5, function(){  console.log('dismissed'); });
+      setTimeout(
+      function(){
+        $( "#form_group_certificate" ).removeClass( "has-error" );
+      }, 5000);
+      return false;      
+    }
+  }
+
+  var textarea = document.querySelectorAll("textarea");
+  for (i = 0; i < textarea.length; i++) {
+    var value = textarea[i].value;
+    if (value.trim().length < 1){ 
+      $( "#form_group_comments" ).addClass( "has-error" );      
+      $( "#comments" ).focus();    
+      alertify.notify('Faltan completar campos en el formulario. Verifique si ha ingresado alg&uacute;n comentario.', 'error', 5, function(){  console.log('dismissed'); });
+      setTimeout(
+      function(){
+        $( "#form_group_comments" ).removeClass( "has-error" );
+      }, 5000);
+      return false;
+    }
+  }
+
+  alertify.defaults.glossary.title = '<strong>Confirmaci&oacute;n</strong>';  
+  alertify.confirm('Por favor, confirme la creaci&oacute;n de la nueva solicitud.', function (e) {
+           if (e) {
+             ajax_method(url, 'request', 'insert_request');
+           }
+  }).set('modal', true);
+}
+
 /* método ajax */
 function ajax_method(url, controller, method){
   var form = $('#form').serializeArray();  
@@ -67,9 +112,4 @@ function ajax_method(url, controller, method){
       $( "#close_modal_running_operation" ).trigger( "click" );        
     }
   });
-}
-
-/* cambia el atributto class de un tag */
-function change_class(tag_id, new_class){  
-  $('#'+tag_id).attr('class', new_class);
 }
