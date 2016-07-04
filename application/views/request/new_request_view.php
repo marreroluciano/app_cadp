@@ -120,7 +120,7 @@
    $('#form_group_date_end').hide();
 
    $("#certificate").fileinput({showPreview: false, showUpload: false, showCaption: true, overwriteInitial: false, language: 'es', browseClass: "btn btn-primary btn-sm", removeClass: "btn btn-danger btn-sm" , allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf']});
-   
+
    $('#date_from, #date_end').datepicker({
      format: 'dd/mm/yyyy',     
      language: 'es',            
