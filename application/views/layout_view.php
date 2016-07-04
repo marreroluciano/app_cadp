@@ -31,6 +31,7 @@
   
   <script type="text/javascript">
     //override defaults    
+    $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip();});
     alertify.defaults.theme.input = "form-control";
     alertify.defaults.glossary.ok = '<span class="glyphicon glyphicon-ok"></span> Aceptar';
     alertify.defaults.glossary.cancel = '<span class="glyphicon glyphicon-remove"></span> Cancelar';
