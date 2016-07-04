@@ -57,14 +57,14 @@ function verify_new_user_data(url){
 function verify_new_request(url){
   var input = document.querySelectorAll("input");
   for (i = 0; i < input.length; i++) {
-    var value = input[i].value;    
+    var value = input[i].value;
     if (value.trim().length < 1){
-      $( "#form_group_certificate" ).addClass( "has-error" );
-      $( "#certificate" ).focus();
+      $( "#form_group_"+input[i].id).addClass( "has-error" );
+      $( ".kv-fileinput-caption" ).focus();           
       alertify.notify('Faltan completar campos en el formulario. Verifique si ha adjuntado un certificado.', 'error', 5, function(){  console.log('dismissed'); });
       setTimeout(
       function(){
-        $( "#form_group_certificate" ).removeClass( "has-error" );
+        $( "#form_group_"+input[i].id).removeClass( "has-error" );
       }, 5000);
       return false;      
     }
@@ -73,17 +73,19 @@ function verify_new_request(url){
   var textarea = document.querySelectorAll("textarea");
   for (i = 0; i < textarea.length; i++) {
     var value = textarea[i].value;
-    if (value.trim().length < 1){ 
-      $( "#form_group_comments" ).addClass( "has-error" );      
-      $( "#comments" ).focus();    
+    if (value.trim().length < 1){
+      $( "#form_group_"+textarea[i].id).addClass( "has-error" );
+      $( "#"+textarea[i].id ).focus();
       alertify.notify('Faltan completar campos en el formulario. Verifique si ha ingresado alg&uacute;n comentario.', 'error', 5, function(){  console.log('dismissed'); });
       setTimeout(
       function(){
-        $( "#form_group_comments" ).removeClass( "has-error" );
+        $( "#form_group_"+textarea[i].id).removeClass( "has-error" );
       }, 5000);
       return false;
     }
   }
+
+  alert($("#certificate").val());
 
   alertify.defaults.glossary.title = '<strong>Confirmaci&oacute;n</strong>';  
   alertify.confirm('Por favor, confirme la creaci&oacute;n de la nueva solicitud.', function (e) {
