@@ -64,14 +64,14 @@
         </div>        
       </div>
       <div class="col-xs-6">
-        <div class="form-group form-group-sm">          
+        <div class="form-group form-group-sm" id="form_group_certificate">
           <?=form_label('<small> Certificado </small>', 'certificate', $atr_label); ?>
           <div class="col-sm-8">
             <input type='file' id="certificate" name="file-es[]" class="form-control" data-preview-file-type="text"/>
           </div>
         </div>
-        <div class="form-group form-group-sm">          
-          <?=form_label('<small> Comentarios </small>', 'certificate', $atr_label); ?>
+        <div class="form-group form-group-sm" id="form_group_comments">          
+          <?=form_label('<small> Comentarios </small>', 'comments', $atr_label); ?>
           <div class="col-sm-8">
             <?=form_textarea('comments', set_value(''), 'class="form-control" style="height:77px;" id="comments"');?>  
           </div>
@@ -84,9 +84,9 @@
 
   <div class="row"> 
   <div class="col-xs-12">
-    <?php $attributes = array('name' => 'accept', 'id' => 'accept', 'type' => 'button', 'class' => 'btn btn-success', 'content' => '<span class="glyphicon glyphicon-ok"></span> Aceptar', 'onClick' => '', 'title' => 'Aceptar');?>
+    <?php $attributes = array('name' => 'accept', 'id' => 'accept', 'type' => 'button', 'class' => 'btn btn-success', 'content' => '<span class="glyphicon glyphicon-ok"></span> Aceptar', 'onClick' => "verify_new_request('".base_url()."')", 'data-toggle' => "tooltip", 'title' => 'Aceptar la nueva solicitud');?>
     <?=form_button($attributes);?>
-    <a href="<?php echo base_url();?>request" title="Cancelar"><button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancelar</button></a>
+    <a href="<?php echo base_url();?>request"><button type="button" class="btn btn-danger" data-toggle="tooltip" title="Cancelar"><i class="glyphicon glyphicon-remove"></i> Cancelar</button></a>
   </div>
   </div>
   <?=form_close(); ?>
@@ -114,12 +114,12 @@
   $(document).ready(function(){
    change_class('request', 'active');
    change_class('start', '');
-   change_class('contact', '');
+   change_class('contact', '');   
 
    $('#form_group_date_from').hide();
    $('#form_group_date_end').hide();
 
-   $("#certificate").fileinput({showPreview: false, showUpload: false, showCaption: true, overwriteInitial: false, language: 'es', browseClass: "btn btn-primary btn-sm", removeClass: "btn btn-danger btn-sm" , allowedFileExtensions: ['jpg', 'png','gif']});
+   $("#certificate").fileinput({showPreview: false, showUpload: false, showCaption: true, overwriteInitial: false, language: 'es', browseClass: "btn btn-primary btn-sm", removeClass: "btn btn-danger btn-sm" , allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf']});
    
    $('#date_from, #date_end').datepicker({
      format: 'dd/mm/yyyy',     

@@ -7,7 +7,7 @@
 <hr/>
 <div class="row">
 <div class="col-xs-12">
-  <a href="<?php echo base_url();?>request/new_request" title="Nueva Solicitud"> <button type="button" class="btn btn-success"><i class="glyphicon glyphicon-plus-sign"></i> Nueva Solicitud</button> </a>
+  <a href="<?php echo base_url();?>request/new_request"> <button type="button" class="btn btn-success" data-toggle="tooltip" title="Agregar una nueva solicitud"><i class="glyphicon glyphicon-plus-sign"></i> Nueva Solicitud</button> </a>
 </div>
 </div>
 
