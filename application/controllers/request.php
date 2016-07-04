@@ -6,13 +6,14 @@
       $this->load->library('session');  
       $this->load->model('request_model');
       $this->load->model('type_request_model');
+      $this->load->model('turn_model');
     }
       
     function index() {
       
       $requests = $this->request_model->get_user_requests($this->session->userdata['id']);
 
-      $view_data['requests'] = $requests;
+      $view_data['requests'] = $requests;      
 
       $datos_layout["title"] = "CADP - Solicitudes";
       $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
@@ -23,8 +24,10 @@
    function new_request(){
 
      $request_types = $this->type_request_model->get_requests_types();
+     $turns = $this->turn_model->get_turns();
      
      $view_data['request_types'] = $request_types;
+     $view_data['turns'] = $turns;
 
      $datos_layout["title"] = "CADP - Nueva Solicitud";
      $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
