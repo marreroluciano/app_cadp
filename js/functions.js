@@ -54,8 +54,12 @@ function verify_new_user_data(url){
 }
 
 /* comprueba los datos mínimos del formulario de solicitudes */
-function verify_new_request(url){
-  var input = document.querySelectorAll("input");
+function verify_new_request(url){  
+  if( ($('#request_types').val() == 2) && ($('#value_date_from').val() > $('#value_date_end').val()) ) { 
+    alertify.notify('Verifique las fechas ingresadas.', 'error', 5, function(){  console.log('dismissed'); });
+    return false;
+  }
+  var input = document.querySelectorAll("input");  
   for (i = 0; i < input.length; i++) {
     var value = input[i].value;    
     if (value.trim().length < 1){
@@ -78,7 +82,8 @@ function verify_new_request(url){
           msg = 'Verifique la fecha hasta.';
           break;
         default:break;          
-      }                 
+      }
+
       alertify.notify('Faltan completar campos en el formulario. '+msg, 'error', 5, function(){  console.log('dismissed'); });
       setTimeout(
       function(){
