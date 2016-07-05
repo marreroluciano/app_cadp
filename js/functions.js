@@ -57,14 +57,34 @@ function verify_new_user_data(url){
 function verify_new_request(url){
   var input = document.querySelectorAll("input");
   for (i = 0; i < input.length; i++) {
-    var value = input[i].value;
+    var value = input[i].value;    
     if (value.trim().length < 1){
-      $( "#form_group_"+input[i].id).addClass( "has-error" );
-      $( ".kv-fileinput-caption" ).focus();           
-      alertify.notify('Faltan completar campos en el formulario. Verifique si ha adjuntado un certificado.', 'error', 5, function(){  console.log('dismissed'); });
+      var msg = '';
+      var id_input = input[i].id;
+      switch (id_input) {
+        case 'certificate':        
+          $( "#form_group_certificate").addClass( "has-error" );
+          $( ".kv-fileinput-caption" ).focus();
+          msg = 'Verifique si ha selccionado un certificado.';
+          break;
+        case 'value_date_from':        
+          $( "#date_from").addClass( "has-error" );
+          $( "#value_date_from" ).focus();
+          msg = 'Verifique la fecha desde.';
+          break;
+        case 'value_date_end':
+          $( "#date_end").addClass( "has-error" );
+          $( "#value_date_end" ).focus();
+          msg = 'Verifique la fecha hasta.';
+          break;
+        default:break;          
+      }                 
+      alertify.notify('Faltan completar campos en el formulario. '+msg, 'error', 5, function(){  console.log('dismissed'); });
       setTimeout(
       function(){
-        $( "#form_group_"+input[i].id).removeClass( "has-error" );
+        $( "#form_group_certificate").removeClass( "has-error" );
+        $( "#date_from").removeClass( "has-error" );
+        $( "#date_end").removeClass( "has-error" );
       }, 5000);
       return false;      
     }
@@ -84,8 +104,6 @@ function verify_new_request(url){
       return false;
     }
   }
-
-  alert($("#certificate").val());
 
   alertify.defaults.glossary.title = '<strong>Confirmaci&oacute;n</strong>';  
   alertify.confirm('Por favor, confirme la creaci&oacute;n de la nueva solicitud.', function (e) {
