@@ -113,21 +113,45 @@ function verify_new_request(url){
   alertify.defaults.glossary.title = '<strong>Confirmaci&oacute;n</strong>';  
   alertify.confirm('Por favor, confirme la creaci&oacute;n de la nueva solicitud.', function (e) {
            if (e) {
-             ajax_method(url, 'request', 'insert_request');
+            var formData = new FormData($('#form')[0]);
+            formData.append('tax_file', $('input[type=file]')[0].files[0]);
+            formData.append('certificate', $('#certificate').val());
+            formData.append('request_types', $('#request_types').val());
+            formData.append('turn', $('#turns').val());
+            formData.append('value_date_from', $('#value_date_from').val());
+            formData.append('value_date_end', $('#value_date_end').val());
+            formData.append('comments', $('#comments').val());
+
+            $.ajax({
+              data: formData,
+              url:   url+'index.php/request/insert_request',
+              type:  'post',
+              processData: false,
+              contentType: false,
+              beforeSend: function () {
+                $("#result").html("Procesando, espere por favor...");
+                $( "#modal_running_operation" ).trigger( "click" );
+              },
+              success:  function (response) {
+                $("#result").html(response);
+                $( "#close_modal_running_operation" ).trigger( "click" );        
+              }
+            });
+            //ajax_method(url, 'request', 'insert_request');
            }
   }).set('modal', true);
 }
 
 /* método ajax */
 function ajax_method(url, controller, method){
-  var form = $('#form').serializeArray();  
+  var form = $('#form').serializeArray();
   var parameters = {
     "form": form
   };
   $.ajax({
     data:  parameters,
     url:   url+'index.php/'+controller+'/'+method+'/',
-    type:  'post',
+    type:  'post',    
     beforeSend: function () {
       $("#result").html("Procesando, espere por favor...");
       $( "#modal_running_operation" ).trigger( "click" );
