@@ -1,5 +1,7 @@
 <?php  $atr_label = array('class' => 'col-sm-4 control-label'); ?>
 
+<div id="result"></div>
+
 <div class="row"> 
 <div class="col-xs-12"> 
   <h5><strong> NUEVA SOLICITUD </strong></h5>
@@ -8,8 +10,8 @@
 
 <div class="row"> 
 <div class="col-xs-12">
-  <?php $attributes = array('class' => 'form-horizontal', 'role'=>'form', 'id' => 'form_request'); ?>
-  <?php echo form_open('', $attributes); ?>
+  <?php $attributes = array('class' => 'form-horizontal', 'role'=>'form', 'id' => 'form', 'enctype' => 'multipart/form-data'); ?>
+  <?php echo form_open_multipart('request/insert_request', $attributes); ?>
 
   <div class="panel panel-default">
   <div class="panel-heading"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Datos de la solicitud </div>
@@ -62,12 +64,13 @@
             </div>
           </div>
         </div>        
-      </div>
+      </div>    
+
       <div class="col-xs-6">
         <div class="form-group form-group-sm" id="form_group_certificate">
           <?=form_label('<small> Certificado </small>', 'certificate', $atr_label); ?>
           <div class="col-sm-8">
-            <input type='file' id="certificate" name="file-es[]" class="form-control" data-preview-file-type="text"/>
+            <input type='file' id="certificate" name="certificate" class="form-control" data-preview-file-type="text"/>
           </div>
         </div>
         <div class="form-group form-group-sm" id="form_group_comments">          
@@ -75,9 +78,9 @@
           <div class="col-sm-8">
             <?=form_textarea('comments', set_value(''), 'class="form-control" style="height:77px;" id="comments"');?>  
           </div>
-        </div>
-        
+        </div>        
       </div>
+
     </div>      
   </div>
   </div>
@@ -87,6 +90,8 @@
     <?php $attributes = array('name' => 'accept', 'id' => 'accept', 'type' => 'button', 'class' => 'btn btn-success', 'content' => '<span class="glyphicon glyphicon-ok"></span> Aceptar', 'onClick' => "verify_new_request('".base_url()."')", 'data-toggle' => "tooltip", 'title' => 'Aceptar la nueva solicitud');?>
     <?=form_button($attributes);?>
     <a href="<?php echo base_url();?>request"><button type="button" class="btn btn-danger" data-toggle="tooltip" title="Cancelar"><i class="glyphicon glyphicon-remove"></i> Cancelar</button></a>
+    <!--<button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Aceptar"><i class="glyphicon glyphicon-remove"></i> Aceptar</button>-->
+
   </div>
   </div>
   <?=form_close(); ?>
@@ -94,12 +99,12 @@
 </div>
 
 <!-- Modal para el alta de paciente -->
-<a data-toggle="modal" href="#modal_insert" id="modal_insert_click" style="display: none"></a>
+<a data-toggle="modal" href="#modal_insert" id="modal_running_operation" style="display: none"></a>
 <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="close_modal_insert">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="close_modal_running_operation">&times;</button>
         <h5 class="modal-title">Enviando la nueva solicitud, espere por favor...</h5>
       </div>
       <div class="modal-body">
@@ -119,7 +124,7 @@
    $('#form_group_date_from').hide();
    $('#form_group_date_end').hide();
 
-   $("#certificate").fileinput({showPreview: false, showUpload: false, showCaption: true, overwriteInitial: false, language: 'es', browseClass: "btn btn-primary btn-sm", removeClass: "btn btn-danger btn-sm" , allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf']});
+   $("#certificate").fileinput({showPreview: false, showUpload: false, showCaption: true, overwriteInitial: false, language: 'es', browseClass: "btn btn-primary btn-sm", removeClass: "btn btn-danger btn-sm" , allowedFileExtensions: ['jpg', 'png', 'gif']});
 
    $('#date_from, #date_end').datepicker({
      format: 'dd/mm/yyyy',     

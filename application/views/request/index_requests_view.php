@@ -17,8 +17,8 @@
   <table class="table table-hover table table-condensed">
   <thead>
     <tr>      
-      <th><small>Fecha</small></th>
-      <th><small>Tipo de Solicitud</small></th>
+      <th><small>Fecha y hora</small></th>
+      <th><small>Tipo de Solicitud</small></th>      
       <th><small>Estado</small></th>
       <th><small>Acciones</small></th>
     </tr>
@@ -26,12 +26,15 @@
   <tbody id="">  
   <?php foreach ($requests as $key => $value) { ?>
   <tr id="">
-  	<td><small></small></td>
-  	<td><small></small></td>   
-  	<td><small></small></td>      
+    <?php $date = date_create($value->date); ?>
+  	<td><small><?=date_format($date, 'd/m/Y - h:i:s'); ?></small></td>
+  	<td><small><?=$value->type_request_detail; ?></small></td>    
+  	<td><small><?=$value->request_state_detail; ?></small></td>
   	<td><small>
-  	  <a href="<?php echo base_url();?>request/view/<?=$value['id']; ?>" title="Ver"><button type="button" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-info-sign"></i> Ver</button></a>
-      <a href="<?php echo base_url();?>request/edit/<?=$value['id']; ?>" title="Editar"><button type="button" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i> Editar</button></a>
+  	  <a href="<?php echo base_url();?>request/view/<?=$value->id; ?>"><button type="button" class="btn btn-info btn-xs" data-toggle="tooltip" title="Ver"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+      <?php if ($value->id_request_state == 1) { ?>
+        <a href="<?php echo base_url();?>request/edit/<?=$value->id; ?>"><button type="button" class="btn btn-warning btn-xs" data-toggle="tooltip" title="Editar"><i class="glyphicon glyphicon-edit"></i></button></a>
+      <?php } ?>
   	</small></td>
   </tr>	 
   <?php } /* end del foreach */ ?> 
