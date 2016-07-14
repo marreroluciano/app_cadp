@@ -35,24 +35,27 @@
      $this->load->view('layout_view', $datos_layout);
    }
 
-   function insert_request(){
-     //$certificate = $this->input->post('certificate');     
-     $config['upload_path'] = 'D:\app_cadp\uploads';
+   function insert_request(){     
+     //$config['upload_path'] = 'D:\app_cadp\uploads';
+     $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';
      $config['allowed_types'] = 'gif|jpg|png';
 
      $this->load->library('upload', $config);
      $this->upload->initialize($config);
 
+     $valid_operation = false;
+
      if (!$this->upload->do_upload("certificate")){
         $error = $this->upload->display_errors();
+        echo $error;
      } else { 
          $file_data = $this->upload->data();
          $certificate = $file_data['file_name'];
-         $request_types = $this->input->post('request_types');
+         $id_request_type = $this->input->post('request_types');
 
-         switch ($request_types) {
+         switch ($id_request_type) {
            case 1:
-             $turn = $this->input->post('turn');
+             $id_turn = $this->input->post('turn');
              $value_date_from = null;
              $value_date_end = null;
              break;
@@ -61,29 +64,121 @@
              $date_end = date_create($this->input->post('value_date_end'));
              $value_date_from = date_format($date_from, 'Y-m-d');
              $value_date_end = date_format($date_from, 'Y-m-d');
-             $turn = null;
+             $id_turn = null;
              break;
-         }         
-         //$comments = $this->input->post('comments');
+         }
+         
          date_default_timezone_set('America/Argentina/Buenos_Aires');
          $date = date("Y-m-d h:i:s");         
          $data = array('date' => $date, 
                        'current_turn' => null, 
-                       'requested_shift' => $turn, 
+                       'requested_shift' => $id_turn, 
                        'start_date_justification' => $value_date_from, 
                        'end_date_justification' => $value_date_end, 
                        'reason' => $this->input->post('comments'),
                        'attached' => $certificate,
-                       'id_request_type' => $request_types,
+                       'id_request_type' => $id_request_type,
                        'user_id' => $this->session->userdata['id'],
                        'id_request_state' => 1);
          $valid_insert = $this->request_model->insert_request($data);
+         //$valid_insert = 1;
+         if ($valid_insert > 0) { $valid_operation = true; }
      }
-     print_r('<pre>');
-     print_r($valid_insert);
-     print_r('</pre>');
 
+     /* se arma la salida */
+     $output = '';
+     if ($valid_operation) {
+       $output.= '<div class="row">';
+       $output.= '<div class="col-xs-12">';
+       $output.= '<div class="alert alert-success" role="alert"><i class="fa fa-thumbs-up" aria-hidden="true"></i> La solicitud ha sido enviada y en breve ser&aacute; procesada.</div>';
+       $output.= '</div>';
+       $output.= '</div>';
+
+       $output.= '<div class="row">';
+       $request_type = $this->type_request_model->get_request_type($id_request_type);
+       $output.= '<div class="col-xs-6">';
+       $output.= '<ul class="list-group">';
+       $output.= '<li class="list-group-item"><strong>Tipo de solicitud:</strong> '.$request_type[0]->detail.'</li>';
+       switch ($id_request_type) {
+         case 1:
+           $turn = $this->turn_model->get_turn($id_turn);
+           $output.= '<li class="list-group-item"><strong>Pasar al:</strong> '.$turn[0]->detail.'</li>';
+           break;
+         case 2:
+           $output.= '<li class="list-group-item"><strong>Fecha desde:</strong> '.$this->input->post('value_date_from').'</li>';
+           $output.= '<li class="list-group-item"><strong>Fecha hasta:</strong> '.$this->input->post('value_date_end').'</li>';
+           break;
+       }
+       $output.= '<li class="list-group-item"><strong>Comentarios:</strong> '.$this->input->post('comments').'</li>';
+       $output.= '</ul>';
+       $output.= '</div>';
+
+       $output.= '<div class="col-xs-6">';
+       
+       /* The Bootstrap Image Gallery lightbox */
+       $output.= '<div id="blueimp-gallery" class="blueimp-gallery">';
+       $output.= '<div class="slides"></div>';
+       $output.= '<h3 class="title"></h3>';
+       $output.= '<a class="prev">‹</a>';
+       $output.= '<a class="next">›</a>';
+       $output.= '<a class="close">×</a>';
+       $output.= '<a class="play-pause"></a>';
+       $output.= '<ol class="indicator"></ol>';
+       
+       $output.= '<div class="modal fade">';
+       $output.= '<div class="modal-dialog">';
+       $output.= '<div class="modal-content">';
+       $output.= '<div class="modal-header">';
+       $output.= '<button type="button" class="close" aria-hidden="true">&times;</button>';
+       $output.= '<h4 class="modal-title"></h4>';
+       $output.= '</div>';
+       $output.= '<div class="modal-body next"></div>';
+       /*
+       <div class="modal-footer">
+         <button type="button" class="btn btn-default pull-left prev">
+         <i class="glyphicon glyphicon-chevron-left"></i>
+           Previous
+         </button>
+         <button type="button" class="btn btn-primary next">
+           Next
+         <i class="glyphicon glyphicon-chevron-right"></i>
+         </button>
+       </div>
+       */
+       $output.= '</div>';
+       $output.= '</div>';
+       $output.= '</div>';
+       $output.= '</div>';
+
+       $output.= '<div id="links">';
+       $output.= '<a href="../images/uploads/'.$certificate.'" title="Certificado" data-gallery>';
+       $output.= '<img src="../images/uploads/'.$certificate.'" alt="Certificado" class="img-circle img-responsive center-block" width="50%" height="50%" />';
+       $output.= '</a>';       
+       $output.= '</div>';
+
+       /* script para Bootstrap Image Gallery lightbox */
+       $output.= '<script type="text/javascript">';
+       $output.= 'document.getElementById("links").onclick = function (event) {
+                    event = event || window.event;
+                    var target = event.target || event.srcElement,
+                    link = target.src ? target.parentNode : target,
+                    options = {index: link, event: event},
+                    links = this.getElementsByTagName("a");
+                    blueimp.Gallery(links, options);
+                  };';
+       $output.= '</script>';
+
+       $output.= '</div>';
+       $output.= '</div>';
+
+       /* BOTON PARA REGRESAR */
+       $output .= '<div class="row">';
+       $output .= '<div class="col-xs-12">';
+       $output .= '<a href="'.base_url().'/request" type="button" class="btn btn-success"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Volver al listado </a>';
+       $output .= '</div>';
+       $output .= '</div>';
+     }
+     echo $output;
    }
-
 } 
 ?> 
