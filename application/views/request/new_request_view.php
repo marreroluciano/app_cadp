@@ -1,6 +1,6 @@
 <?php  $atr_label = array('class' => 'col-sm-4 control-label'); ?>
 
-<div id="result"></div>
+<div id="result">
 
 <div class="row"> 
 <div class="col-xs-12"> 
@@ -96,6 +96,8 @@
   </div>
   <?=form_close(); ?>
 </div>
+</div>
+
 </div>
 
 <!-- Modal para el alta de paciente -->
