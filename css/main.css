@@ -35,17 +35,20 @@ a {
 }
 
 
-/*
 .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok {
   color: #fff;
   background-color: #5cb85c;
   border-color: #4cae4c;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok:hover {
   color: #fff;
   background-color: #449d44;
   border-color: #398439;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 
@@ -53,10 +56,14 @@ a {
   color: #fff;
   background-color: #d9534f;
   border-color: #d43f3a;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .alertify .ajs-footer .ajs-buttons .ajs-button.ajs-cancel:hover {
   color: #fff;
   background-color: #c9302c;
   border-color: #761c19;
-}*/
+  border-radius: 4px;
+  font-size: 14px;
+}
