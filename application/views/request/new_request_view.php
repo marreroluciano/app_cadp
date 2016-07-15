@@ -71,12 +71,13 @@
           <?=form_label('<small> Certificado </small>', 'certificate', $atr_label); ?>
           <div class="col-sm-8">
             <input type='file' id="certificate" name="certificate" class="form-control" data-preview-file-type="text"/>
+            <span id="helpBlock" class="help-block"><small>Formatos aceptados: gif, jpg y png.</small></span>
           </div>
         </div>
         <div class="form-group form-group-sm" id="form_group_comments">          
           <?=form_label('<small> Comentarios </small>', 'comments', $atr_label); ?>
           <div class="col-sm-8">
-            <?=form_textarea('comments', set_value(''), 'class="form-control" style="height:77px;" id="comments"');?>  
+            <?=form_textarea('comments', set_value(''), 'class="form-control" style="height:70px;" id="comments"');?>  
           </div>
         </div>        
       </div>
@@ -90,8 +91,6 @@
     <?php $attributes = array('name' => 'accept', 'id' => 'accept', 'type' => 'button', 'class' => 'btn btn-success', 'content' => '<span class="glyphicon glyphicon-ok"></span> Aceptar', 'onClick' => "verify_new_request('".base_url()."')", 'data-toggle' => "tooltip", 'title' => 'Aceptar la nueva solicitud');?>
     <?=form_button($attributes);?>
     <a href="<?php echo base_url();?>request"><button type="button" class="btn btn-danger" data-toggle="tooltip" title="Cancelar"><i class="glyphicon glyphicon-remove"></i> Cancelar</button></a>
-    <!--<button type="submit" class="btn btn-primary" data-toggle="tooltip" title="Aceptar"><i class="glyphicon glyphicon-remove"></i> Aceptar</button>-->
-
   </div>
   </div>
   <?=form_close(); ?>
