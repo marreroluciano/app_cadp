@@ -14,7 +14,7 @@
   <?php echo form_open_multipart('request/insert_request', $attributes); ?>
 
   <div class="panel panel-default">
-  <div class="panel-heading"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Datos de la solicitud </div>
+  <div class="panel-heading"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Datos de la nueva solicitud </div>
   <div class="panel-body">
     <div class="row">
       <div class="col-xs-6">
@@ -115,7 +115,6 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- recuperamos los datos del paciente si es que existe -->
 <script type="text/javascript">  
   $(document).ready(function(){
    change_class('request', 'active');
