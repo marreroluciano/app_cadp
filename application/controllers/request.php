@@ -64,7 +64,7 @@
              $date_from = date_create($this->input->post('value_date_from'));
              $date_end = date_create($this->input->post('value_date_end'));
              $value_date_from = date_format($date_from, 'Y-m-d');
-             $value_date_end = date_format($date_from, 'Y-m-d');
+             $value_date_end = date_format($date_end, 'Y-m-d');
              $id_turn = null;
              break;
          }
@@ -175,11 +175,22 @@
        /* BOTON PARA REGRESAR */
        $output .= '<div class="row">';
        $output .= '<div class="col-xs-12">';
-       $output .= '<a href="'.base_url().'/request" type="button" class="btn btn-success"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Volver al listado </a>';
+       $output .= '<a href="'.base_url().'request" type="button" class="btn btn-success" data-toggle="tooltip" title="Volver al listado"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Volver al listado </a>';
        $output .= '</div>';
        $output .= '</div>';
      }
      echo $output;
+   }
+
+   function view($request_id){
+     
+     $request = $this->request_model->get_request($request_id);
+     $view_data['request'] = $request;
+
+     $datos_layout["title"] = "CADP - Ver solicitud";
+     $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+     $datos_layout["content"] = $this->load->view('request/request_view', $view_data, true);
+     $this->load->view('layout_view', $datos_layout);
    }
 } 
 ?> 
