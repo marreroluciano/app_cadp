@@ -24,8 +24,7 @@
               $date_end = date_create($request[0]->end_date_justification);
               $date_from = date_format($date_from, 'd/m/Y');
               $date_end = date_format($date_end, 'd/m/Y');
-              echo '<li class="list-group-item"><small><strong>Fecha desde:</strong> '.$date_from.'</small></li>';
-              echo '<li class="list-group-item"><small><strong>Fecha hasta:</strong> '.$date_end.'</small></li>';
+              echo '<li class="list-group-item"><small><strong>Fecha desde:</strong> '.$date_from.' -- <strong>Fecha hasta: </strong>'.$date_end.'</small></li>';              
             break;
         }?>
         <li class="list-group-item"><small><strong>Comentarios: </strong><?=$request[0]->reason;?></small></li>
@@ -40,6 +39,45 @@
     </div>
 
     <div class="col-xs-6">
+      <!-- The Bootstrap Image Gallery lightbox -->
+      <div id="blueimp-gallery" class="blueimp-gallery">'
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>       
+        <div class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" aria-hidden="true">&times;</button>
+              <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body next"></div>       
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div id="links">
+        <a href="<?=base_url()?>images/uploads/<?=$request[0]->attached; ?>" title="Certificado" data-gallery>
+          <img src="<?=base_url()?>images/uploads/<?=$request[0]->attached; ?>" alt="Certificado" class="img-circle img-responsive center-block" width="60%" height="60%" />
+        </a>
+      </div>
+
+       <!--script para Bootstrap Image Gallery lightbox -->
+       <script type="text/javascript">
+         document.getElementById("links").onclick = function (event) {
+           event = event || window.event;
+           var target = event.target || event.srcElement,
+           link = target.src ? target.parentNode : target,
+           options = {index: link, event: event},
+           links = this.getElementsByTagName("a");
+           blueimp.Gallery(links, options);
+         };
+       </script>
     </div>
 
   </div>  
