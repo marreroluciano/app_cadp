@@ -39,6 +39,7 @@
      //$config['upload_path'] = 'D:\app_cadp\uploads';
      $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';
      $config['allowed_types'] = 'gif|jpg|png';
+     //$config['allowed_types'] = '*';    
 
      $this->load->library('upload', $config);
      $this->upload->initialize($config);
