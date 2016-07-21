@@ -35,11 +35,12 @@
      $this->load->view('layout_view', $datos_layout);
    }
 
-   function insert_request(){     
+   function insert_request(){
+     if (empty($_POST ) != true) { 
      //$config['upload_path'] = 'D:\app_cadp\uploads';
      $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';
      $config['allowed_types'] = 'gif|jpg|png';
-     //$config['allowed_types'] = '*';    
+     //$config['allowed_types'] = '*';
 
      $this->load->library('upload', $config);
      $this->upload->initialize($config);
@@ -154,7 +155,7 @@
        $output.= '<div id="links">';
        $output.= '<a href="../images/uploads/'.$certificate.'" title="Certificado" data-gallery>';
        $output.= '<img src="../images/uploads/'.$certificate.'" alt="Certificado" class="img-circle img-responsive center-block" width="50%" height="50%" />';
-       $output.= '</a>';       
+       $output.= '</a>';
        $output.= '</div>';
 
        /* script para Bootstrap Image Gallery lightbox */
@@ -180,6 +181,7 @@
        $output .= '</div>';
      }
      echo $output;
+   } else {redirect('/error_404', 'refresh');}  
    }
 
    function view($request_id){
