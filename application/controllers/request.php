@@ -38,7 +38,7 @@
    function insert_request(){
      if (empty($_POST ) != true) { 
      //$config['upload_path'] = 'D:\app_cadp\uploads';
-     $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';
+     $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';     
      $config['allowed_types'] = 'gif|jpg|png';
      //$config['allowed_types'] = '*';
 
@@ -135,18 +135,7 @@
        $output.= '<h4 class="modal-title"></h4>';
        $output.= '</div>';
        $output.= '<div class="modal-body next"></div>';
-       /*
-       <div class="modal-footer">
-         <button type="button" class="btn btn-default pull-left prev">
-         <i class="glyphicon glyphicon-chevron-left"></i>
-           Previous
-         </button>
-         <button type="button" class="btn btn-primary next">
-           Next
-         <i class="glyphicon glyphicon-chevron-right"></i>
-         </button>
-       </div>
-       */
+
        $output.= '</div>';
        $output.= '</div>';
        $output.= '</div>';
@@ -154,21 +143,9 @@
 
        $output.= '<div id="links">';
        $output.= '<a href="../images/uploads/'.$certificate.'" title="Certificado" data-gallery>';
-       $output.= '<img src="../images/uploads/'.$certificate.'" alt="Certificado" class="img-circle img-responsive center-block" width="50%" height="50%" />';
+       $output.= '<img src="../images/uploads/'.$certificate.'" alt="Certificado" class="img-rounded img-responsive center-block" width="50%" height="50%" />';
        $output.= '</a>';
        $output.= '</div>';
-
-       /* script para Bootstrap Image Gallery lightbox */
-       $output.= '<script type="text/javascript">';
-       $output.= 'document.getElementById("links").onclick = function (event) {
-                    event = event || window.event;
-                    var target = event.target || event.srcElement,
-                    link = target.src ? target.parentNode : target,
-                    options = {index: link, event: event},
-                    links = this.getElementsByTagName("a");
-                    blueimp.Gallery(links, options);
-                  };';
-       $output.= '</script>';
 
        $output.= '</div>';
        $output.= '</div>';
