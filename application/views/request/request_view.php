@@ -62,22 +62,11 @@
       </div>
 
       <div id="links">
-        <a href="<?=base_url()?>images/uploads/<?=$request[0]->attached; ?>" title="Certificado" data-gallery>
-          <img src="<?=base_url()?>images/uploads/<?=$request[0]->attached; ?>" alt="Certificado" class="img-circle img-responsive center-block" width="60%" height="60%" />
+        <a href="<?=base_url()?>images/uploads/<?=$request[0]->attached; ?>"  data-toggle="tooltip" title="Certificado" data-gallery>
+          <img src="<?=base_url()?>images/uploads/<?=$request[0]->attached; ?>" alt="Certificado" class="img-rounded img-responsive center-block" width="40%"/>
         </a>
       </div>
 
-       <!--script para Bootstrap Image Gallery lightbox -->
-       <script type="text/javascript">
-         document.getElementById("links").onclick = function (event) {
-           event = event || window.event;
-           var target = event.target || event.srcElement,
-           link = target.src ? target.parentNode : target,
-           options = {index: link, event: event},
-           links = this.getElementsByTagName("a");
-           blueimp.Gallery(links, options);
-         };
-       </script>
     </div>
 
   </div>  
@@ -92,8 +81,8 @@
 </div>
 </div>
   
-<script type="text/javascript">  
-  $(document).ready(function(){
+<script>
+  $(document).ready(function(){   
    change_class('request', 'active');
    change_class('start', '');
    change_class('contact', '');
