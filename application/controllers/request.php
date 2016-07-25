@@ -9,12 +9,9 @@
       $this->load->model('turn_model');
     }
       
-    function index() {
-      
+    function index() {      
       $requests = $this->request_model->get_user_requests($this->session->userdata['id']);
-
-      $view_data['requests'] = $requests;      
-
+      $view_data['requests'] = $requests;
       $datos_layout["title"] = "CADP - Solicitudes";
       $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
       $datos_layout["content"] = $this->load->view('request/index_requests_view', $view_data, true);
@@ -22,13 +19,10 @@
    }
 
    function new_request(){
-
      $request_types = $this->type_request_model->get_requests_types();
-     $turns = $this->turn_model->get_turns();
-     
+     $turns = $this->turn_model->get_turns();     
      $view_data['request_types'] = $request_types;
      $view_data['turns'] = $turns;
-
      $datos_layout["title"] = "CADP - Nueva Solicitud";
      $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
      $datos_layout["content"] = $this->load->view('request/new_request_view', $view_data, true);
@@ -162,28 +156,29 @@
    }
 
    function view($request_id = null){     
-     $request = $this->request_model->get_request($request_id);
-     $view_data['request'] = $request;
-
-     $datos_layout["title"] = "CADP - Ver solicitud";
-     $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
-     $datos_layout["content"] = $this->load->view('request/request_view', $view_data, true);
-     $this->load->view('layout_view', $datos_layout);
+     $request = $this->request_model->get_user_request($request_id, $this->session->userdata['id']);
+     if (sizeof($request) > 0) {
+       $view_data['request'] = $request;
+       $datos_layout["title"] = "CADP - Ver solicitud";
+       $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+       $datos_layout["content"] = $this->load->view('request/request_view', $view_data, true);
+       $this->load->view('layout_view', $datos_layout);
+     } else {redirect('/error_404', 'refresh');}
    }
 
    function edit($request_id = null){
-     $request = $this->request_model->get_request($request_id);
-     $request_types = $this->type_request_model->get_requests_types();
-     $turns = $this->turn_model->get_turns();
-     
-     $view_data['request_types'] = $request_types;
-     $view_data['turns'] = $turns;
-     $view_data['request'] = $request;
-
-     $datos_layout["title"] = "CADP - Editando solicitud";
-     $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
-     $datos_layout["content"] = $this->load->view('request/edit_request_view', $view_data, true);
-     $this->load->view('layout_view', $datos_layout);
+     $request = $this->request_model->get_user_request($request_id, $this->session->userdata['id']);
+     if (sizeof($request) > 0){
+       $request_types = $this->type_request_model->get_requests_types();
+       $turns = $this->turn_model->get_turns();     
+       $view_data['request_types'] = $request_types;
+       $view_data['turns'] = $turns;
+       $view_data['request'] = $request;
+       $datos_layout["title"] = "CADP - Editando solicitud";
+       $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+       $datos_layout["content"] = $this->load->view('request/edit_request_view', $view_data, true);
+       $this->load->view('layout_view', $datos_layout);
+     } else {redirect('/error_404', 'refresh');}
    }
 
    function edit_request(){
@@ -202,9 +197,12 @@
            $error = $this->upload->display_errors();           
            $valid_upload = false;
            echo $error;
-         } else {
+         } else {            
             $file_data = $this->upload->data();
             $certificate = $file_data['file_name'];
+
+            $file_path = $config['upload_path'].'\\'.$this->input->post('attached');
+            $file_path = unlink($file_path);
          }
        } else { $certificate = $this->input->post('attached'); }
 
@@ -230,8 +228,8 @@
          $date_update = date("Y-m-d h:i:s");
          $data = array('date_update' => $date_update,                       
                        'requested_shift' => $id_turn, 
-                       'start_date_justification' => $value_date_from, 
-                       'end_date_justification' => $value_date_end, 
+                       'start_date_justification' => $date_from, 
+                       'end_date_justification' => $date_end, 
                        'reason' => $this->input->post('comments'),
                        'attached' => $certificate
                        );
