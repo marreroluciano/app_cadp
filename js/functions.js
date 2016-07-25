@@ -61,7 +61,7 @@ function verify_request(url, method){
     var date_from = new Date(date_from[2],(date_from[1]-1),date_from[0]);
     var date_end = new Date(date_end[2],(date_end[1]-1),date_end[0]);
     if (date_from > date_end) { 
-      alertify.notify('Verifique las fechas ingresadas.', 'error', 5, function(){  console.log('dismissed'); });
+      alertify.notify('<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Verifique las fechas ingresadas.', 'error', 5, function(){  console.log('dismissed'); });
       return false;
     }
   }
@@ -93,7 +93,7 @@ function verify_request(url, method){
         default:break;          
       }
 
-      alertify.notify('Faltan completar campos en el formulario. '+msg, 'error', 5, function(){  console.log('dismissed'); });
+      alertify.notify('<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Faltan completar campos en el formulario. '+msg, 'error', 5, function(){  console.log('dismissed'); });
       setTimeout(
       function(){
         $( "#form_group_certificate").removeClass( "has-error" );
@@ -110,7 +110,7 @@ function verify_request(url, method){
     if (value.trim().length < 1){
       $( "#form_group_"+textarea[i].id).addClass( "has-error" );
       $( "#"+textarea[i].id ).focus();
-      alertify.notify('Faltan completar campos en el formulario. Verifique si ha ingresado alg&uacute;n comentario.', 'error', 5, function(){  console.log('dismissed'); });
+      alertify.notify('<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Faltan completar campos en el formulario. Verifique si ha ingresado alg&uacute;n comentario.', 'error', 5, function(){  console.log('dismissed'); });
       setTimeout(
       function(){
         $( "#form_group_"+textarea[i].id).removeClass( "has-error" );
