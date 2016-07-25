@@ -22,11 +22,12 @@
     }
 
     /* obtiene una solicitud */
-    function get_request($request_id){
+    function get_user_request($request_id, $id_user){
       $this->db->select('request.id, request.date, request.requested_shift, request.start_date_justification, request.end_date_justification, request.reason, request.attached, type_request.id as type_request_id, type_request.detail as type_request_detail, request_state.detail as request_state_detail, request_state.class as request_class, id_request_state, request.evaluation_date, request.state_reason'); 
       $this->db->join('type_request', 'type_request.id = request.id_request_type');
       $this->db->join('request_state', 'request_state.id = request.id_request_state');
       $this->db->where('request.id',$request_id);
+      $this->db->where('user_id',$id_user);
       $query = $this->db->get('request');
       return($query->result());
     }
