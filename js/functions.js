@@ -54,19 +54,28 @@ function verify_new_user_data(url){
 }
 
 /* comprueba los datos mínimos del formulario de solicitudes */
-function verify_new_request(url){  
-  if( ($('#request_types').val() == 2) && ($('#value_date_from').val() > $('#value_date_end').val()) ) { 
-    alertify.notify('Verifique las fechas ingresadas.', 'error', 5, function(){  console.log('dismissed'); });
-    return false;
+function verify_request(url, method){
+  if( $('#request_types').val() == 2 ) {    
+    date_from = $('#value_date_from').val().split("/");
+    date_end = $('#value_date_end').val().split("/");   
+    var date_from = new Date(date_from[2],(date_from[1]-1),date_from[0]);
+    var date_end = new Date(date_end[2],(date_end[1]-1),date_end[0]);
+    if (date_from > date_end) { 
+      alertify.notify('Verifique las fechas ingresadas.', 'error', 5, function(){  console.log('dismissed'); });
+      return false;
+    }
   }
   var input = document.querySelectorAll("input");  
   for (i = 0; i < input.length; i++) {
-    var value = input[i].value;    
-    if (value.trim().length < 1){
-      var msg = '';
-      var id_input = input[i].id;
+    var value = input[i].value;
+    var id_input = input[i].id;
+
+    if ((method == 'edit_request') && (id_input == 'certificate')){value='not verify';}
+       
+    if (value.trim().length < 1) {
+      var msg = '';      
       switch (id_input) {
-        case 'certificate':        
+        case 'certificate':
           $( "#form_group_certificate").addClass( "has-error" );
           $( ".kv-fileinput-caption" ).focus();
           msg = 'Verifique si ha selccionado un certificado.';
@@ -111,7 +120,7 @@ function verify_new_request(url){
   }
 
   alertify.defaults.glossary.title = '<strong>Confirmaci&oacute;n</strong>';  
-  alertify.confirm('Por favor, confirme la creaci&oacute;n de la nueva solicitud.', function (e) {
+  alertify.confirm('Por favor, confirme la operaci&oacute;n a realizar.', function (e) {
            if (e) {
             var formData = new FormData($('#form')[0]);
             formData.append('tax_file', $('input[type=file]')[0].files[0]);
@@ -124,7 +133,7 @@ function verify_new_request(url){
 
             $.ajax({
               data: formData,
-              url:   url+'index.php/request/insert_request',
+              url:   url+'index.php/request/'+method,
               type:  'post',
               processData: false,
               contentType: false,
@@ -136,8 +145,7 @@ function verify_new_request(url){
                 $("#result").html(response);
                 $( "#close_modal_running_operation" ).trigger( "click" );        
               }
-            });
-            //ajax_method(url, 'request', 'insert_request');
+            });            
            }
   }).set('modal', true);
 }
