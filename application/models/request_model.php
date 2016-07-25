@@ -30,5 +30,10 @@
       $query = $this->db->get('request');
       return($query->result());
     }
+
+    function update_request($request_id, $data){
+      $this->db->where('id', $request_id);
+      return($this->db->update('request', $data));
+    }
 }
 ?> 
