@@ -143,7 +143,11 @@ function verify_request(url, method){
               },
               success:  function (response) {
                 $("#result").html(response);
-                $( "#close_modal_running_operation" ).trigger( "click" );        
+                $( "#close_modal_running_operation" ).trigger( "click" );
+              },
+              error: function (xhr, ajaxOptions, thrownError) { 
+                $("#result").html('<div class="alert alert-danger" role="alert"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> <strong>Error!</strong> Ha ocurrido un problema al actualizar la solicitud: '+thrownError+'</div>');
+                $( "#close_modal_running_operation" ).trigger( "click" ); 
               }
             });            
            }
