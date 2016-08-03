@@ -188,16 +188,15 @@
        $valid_upload = true;
 
        if ($certificate != '') {
-         $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';
+         $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';         
          $config['allowed_types'] = 'gif|jpg|png';
          $this->load->library('upload', $config);
          $this->upload->initialize($config);
 
          if (!$this->upload->do_upload("certificate")){
-           $error = $this->upload->display_errors();           
+           $upload_error = $this->upload->display_errors();
            $valid_upload = false;
-           echo $error;
-         } else {            
+         } else {
             $file_data = $this->upload->data();
             $certificate = $file_data['file_name'];
 
@@ -233,10 +232,31 @@
                        'reason' => $this->input->post('comments'),
                        'attached' => $certificate
                        );
-         $valid_update = $this->request_model->update_request($this->input->post('request_id'), $data);
+         $valid_update = $this->request_model->update_request($this->input->post('request_id'), $data);         
 
-         echo $valid_update;
-       }
+         if ($valid_update > 0) {
+           $output = '<div class="row">';
+           $output.= '<div class="col-xs-12">';
+           $output.= '<div class="alert alert-success" role="alert"><i class="fa fa-thumbs-up" aria-hidden="true"></i> La solicitud ha sido editada correctamente.</div>';
+           $output.= '</div>';
+           $output.= '</div>';
+         } 
+       } else {
+         /* error al subir el archivo adjunto */
+         $output = '<div class="row">';
+         $output.= '<div class="col-xs-12">';
+         $output.= '<div class="alert alert-danger" role="alert"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> <strong>Error!</strong> Ha ocurrido un problema al subir el archivo: '.$upload_error.'</div>';
+         $output.= '</div>';
+         $output.= '</div>';
+        }
+       /* BOTON PARA REGRESAR */
+       $output .= '<div class="row">';
+       $output .= '<div class="col-xs-12">';
+       $output .= '<a href="'.base_url().'request" type="button" class="btn btn-success" data-toggle="tooltip" title="Volver al listado"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Volver al listado </a>';
+       $output .= '</div>';
+       $output .= '</div>';
+
+       echo $output;   
      } else {redirect('/error_404', 'refresh');}
    }
 } 
