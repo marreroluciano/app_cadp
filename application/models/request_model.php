@@ -33,7 +33,7 @@
     }
 
     function update_request($request_id, $data){
-      $this->db->where('id', $request_id);
+      $this->db->where('id', $request_id);      
       return($this->db->update('request', $data));
     }
 }
