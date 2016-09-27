@@ -27,5 +27,12 @@
       $query = $this->db->get('student');
       return($query->result());
     }
+
+    /* recupera un estudiante por su id */
+    function get_student($student_id){
+      $this->db->where('id', $student_id);      
+      $query = $this->db->get('student');
+      return($query->result());
+    }
 }
 ?> 

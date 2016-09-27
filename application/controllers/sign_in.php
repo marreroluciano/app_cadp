@@ -16,6 +16,9 @@
        $this->load->view('layout_view', $datos_layout);
       } else {
          $data_view['count_requests'] = $this->user_model->count_requests($this->session->userdata['id']);
+         $student = $this->student_model->get_student($this->session->userdata['student_id']);
+         $data_view['student'] = $student[0];
+
          $datos_layout["title"]   = "CADP";
          $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
          $datos_layout["content"] = $this->load->view('user/initial_user_view', $data_view, true);
@@ -29,10 +32,14 @@
        $user_pass = $this->input->post('user_pass');
        $user = $this->user_model->get_user_username($user_name);
        if ( (sizeof($user) > 0) && (($this->encrypt->decode($user[0]->pass)) == $user_pass) ) {         
-         $data_session = array('id' => $user[0]->id,'user' => $user[0]->user);
+         $data_session = array('id' => $user[0]->id,'user' => $user[0]->user, 'student_id' => $user[0]->student_id);
+         $student = $this->student_model->get_student($user[0]->student_id);
+
          $this->session->set_userdata($data_session);
 
          $data_view['count_requests'] = $this->user_model->count_requests($user[0]->id);
+         $data_view['student'] = $student[0];
+
          $datos_layout["title"]   = "CADP";
          $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
          $datos_layout["content"] = $this->load->view('user/initial_user_view', $data_view, true);
