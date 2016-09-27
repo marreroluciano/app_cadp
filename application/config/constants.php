@@ -83,3 +83,14 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/* CONSTANTES DEL SISTEMA */
+define('INITIAL_TITLE', 'CADP - Gesti&oacute;n del curso'); // título inicial del sistema.
+define('INITIAL_TEXT', 'Si es alumno de Conceptos de Algoritmos, Datos y Programas y se encuentra inscripto en Guaran&iacute;, entonces puede registrarse haciendo click en '); // texto inicial
+define('LOGIN_ERROR', ' El usuario y/o la contrase&ntilde;a son incorrectos.'); // error en el inicio de sesión
+//define('ALREADY_EXISTS_DNI', ' Ya existe un usuario registrado que posee el mismo DNI. Por favor, ingrese su DNI correctamente.'); // error de que ya existe el DNI que se ha ingresado
+define('NOT_MATCH_DNI', ' El DNI ingresado no coincide con el alumno seleccionado. Por favor, seleccione e ingrese los datos correctamente.'); // error de coincidencia de DNI
+define('EXISTING_USER', ' El nombre de usuario ingresado ya se encuentra en uso. Por favor, ingrese otro nombre de usuario.'); // error de existencia de nombre usuario
+define('NEW_USER_ERROR', ' El usuario no ha podido ser creado.'); // error al crear un nuevo usuario. 
+define('USER_CREATED_SUCCESSFULLY', ' El usuario ha sido creado correctamente. Ya puede ingresar utilizando su nombre de usuario y su clave.'); // usuario creado correctamete.
+define('DATABASE_ERROR', ' Ha ocurrido un error en la Base de Datos.'); // error en la Base de Datos.

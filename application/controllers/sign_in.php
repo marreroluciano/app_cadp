@@ -4,6 +4,7 @@
       parent::__construct();
       $this->load->helper('url');
       $this->load->model('user_model');
+      $this->load->model('student_model');
       $this->load->library('encrypt');
       $this->load->library('session');
     }
@@ -54,8 +55,15 @@
 
    /* solicitud de registro */
    function register(){
+     $students = $this->student_model->get_unregistered_students();
+     
+     foreach ($students as $key => $value) {       
+       $option_student[$value->id] = $value->surname_and_name;
+     }
+
+     $data_view['option_student'] = $option_student;
      $datos_layout["title"]   = "CADP - Registro de usuario";
-     $datos_layout["content"] = $this->load->view('user_create_view', '', true);
+     $datos_layout["content"] = $this->load->view('user_create_view', $data_view, true);
      $this->load->view('layout_view', $datos_layout);
    }
 
@@ -66,39 +74,54 @@
       $model_method = $this->input->post('model_method');
       $output = '';
       switch ($model_method) {
-        case 'dni': 
+        /*case 'dni': 
           $user = $this->user_model->get_user_dni($value);
           if ( sizeof($user) > 0 ) { 
             $output.= '<div class="row" id="alert_dni" style="display: none;">';
             $output.= '<div class="col-xs-12">';
-            $output.= '<div class="alert alert-danger" role="alert"><span class=" glyphicon glyphicon-alert"></span>Ya existe un usuario con el mismo DNI.</div>';
+            $output.= '<div class="alert alert-danger" role="alert"><span class=" glyphicon glyphicon-alert"></span>'.ALREADY_EXISTS_DNI.'</div>';
             $output.= '</div>';
             $output.= '</div>';
             $output.= '<script type="text/javascript">$("#accept").attr("disabled", true);</script>';
             $output.= '<script type="text/javascript">$("#alert_dni").show("slow")</script>';
           } else {
-            $output.= '<script type="text/javascript"> if(  !($("#alert_user").is(":visible"))  ){ $("#accept").attr("disabled", false); } </script>';
+            $output.= '<script type="text/javascript"> if( (!($("#alert_user").is(":visible"))) && (!($("#alert_not_match_dni").is(":visible")))  ){ $("#accept").attr("disabled", false); } </script>';
             $output.= '<script type="text/javascript">$("#alert_dni").hide("slow")</script>';
           }
-          break;
+          break;*/
+        case 'check_user_dni':
+          $student = $this->student_model->check_user_dni($value[0], $value[1]);
+          if ( sizeof($student) == 0 ) {
+            $output.= '<div class="row" id="alert_not_match_dni" style="display: none;">';
+            $output.= '<div class="col-xs-12">';
+            $output.= '<div class="alert alert-danger" role="alert"><span class=" glyphicon glyphicon-alert"></span>'.NOT_MATCH_DNI.'</div>';
+            $output.= '</div>';
+            $output.= '</div>';
+            $output.= '<script type="text/javascript">$("#accept").attr("disabled", true);</script>';
+            $output.= '<script type="text/javascript">$("#alert_not_match_dni").show("slow")</script>';
+          } else {
+            $output.= '<script type="text/javascript"> if( (!($("#alert_dni").is(":visible"))) && (!($("#alert_user").is(":visible")))   ){ $("#accept").attr("disabled", false); } </script>';
+            $output.= '<script type="text/javascript">$("#alert_not_match_dni").hide("slow")</script>';
+          }
+          break;  
         case 'user':
           $user = $this->user_model->get_user_username($value);
           if ( sizeof($user) > 0 ) { 
             $output.= '<div class="row" id="alert_user" style="display: none;">';
             $output.= '<div class="col-xs-12">';
-            $output.= '<div class="alert alert-danger" role="alert"><span class=" glyphicon glyphicon-alert"></span>Ya existe el nombre de usuario.</div>';
+            $output.= '<div class="alert alert-danger" role="alert"><span class=" glyphicon glyphicon-alert"></span>'.EXISTING_USER.'</div>';
             $output.= '</div>';
             $output.= '</div>';
             $output.= '<script type="text/javascript">$("#accept").attr("disabled", true);</script>';
             $output.= '<script type="text/javascript">$("#alert_user").show("slow")</script>';
           } else {
-            $output.= '<script type="text/javascript"> if(  !($("#alert_dni").is(":visible"))  ){ $("#accept").attr("disabled", false); } </script>';
+            $output.= '<script type="text/javascript"> if( (!($("#alert_not_match_dni").is(":visible"))) && (!($("#alert_dni").is(":visible")))  ){ $("#accept").attr("disabled", false); } </script>';
             $output.= '<script type="text/javascript">$("#alert_user").hide("slow")</script>';
           }
           break;
         case 'login_error':
           $output.= '<div id="alert_error_login" style="display: none;">';          
-          $output.= '<div class="alert alert-danger" role="alert"><span class=" glyphicon glyphicon-alert"></span> El usuario y/o la contrase&ntilde;a son incorrectos.</div>';
+          $output.= '<div class="alert alert-danger" role="alert"><span class=" glyphicon glyphicon-alert"></span>'.LOGIN_ERROR.'</div>';
           $output.= '</div>';
           $output.= '<script type="text/javascript">$("#alert_error_login").show("slow")</script>';
           break;
@@ -111,19 +134,31 @@
    function insert_user(){
      if (empty($_POST ) != true) {
        $form = $this->input->post('form');
-       $pass = $this->encrypt->encode($form[4]['value']);
-       $data = array('dni' => $form[0]['value'], 'apellido_nombre' => $form[1]['value'], 'correo' => $form[2]['value'], 'user' => $form[3]['value'], 'pass' => $pass);
-       $id_user = $this->user_model->insert_user($data);
 
-       /* se arma la salida */
+       $student = $this->student_model->check_user_dni($form[1]['value'], $form[0]['value']);
        $output = '';
-       $output.= '<div class="row"> <div class="col-xs-12">';
-       if ($id_user > 0){
-         $output.= '<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up"></span> Usuario creado correctamente. Ya puede ingresar utilizando su usuario y clave.</div>';
+
+       if (sizeof($student) == 0) { 
+         $output.= '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span>'.NEW_USER_ERROR.' '.NOT_MATCH_DNI.'</div>';
        } else {
-         $output.= '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span> El usuario no ha podido ser creado.</div>';
-       }       
-       $output.= '</div></div>';
+           $user = $this->user_model->get_user_username($form[3]['value']);
+           if (sizeof($user) > 0){
+             $output.= '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span>'.NEW_USER_ERROR.' '.EXISTING_USER.'</div>';
+           } else {              
+              /* usuario válido */              
+              $pass = $this->encrypt->encode($form[4]['value']);
+              $data = array('email' => $form[2]['value'], 'user' => $form[3]['value'], 'pass' => $pass, 'student_id' => $form[0]['value']);
+              $id_user = $this->user_model->insert_user($data);
+              /* se arma la salida */
+              $output.= '<div class="row"> <div class="col-xs-12">';
+              if ($id_user > 0) {
+                $output.= '<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up"></span>'.USER_CREATED_SUCCESSFULLY.'</div>';
+              } else {
+                $output.= '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span>'.NEW_USER_ERROR.' '.DATABASE_ERROR.'</div>';
+              }
+              $output.= '</div></div>';
+           }
+       }
 
        /* BOTON PARA REGRESAR */
        $output .= '<div class="row">';

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <!-- JS -->
+  <script src="<?php echo base_url()?>js/constants.js"></script>
   <script src="<?php echo base_url()?>js/functions.js"></script>
   <script src="<?php echo base_url()?>js/jquery.min.js"></script>
   <script src="<?php echo base_url()?>css/bootstrap/js/bootstrap.min.js"></script>
@@ -17,6 +18,7 @@
   <script src="<?php echo base_url()?>css/bootstrap/js/locales/es.js"></script>  
   <script src="<?php echo base_url()?>css/bootstrap/js/jquery.blueimp-gallery.min.js"></script>
   <script src="<?php echo base_url()?>css/bootstrap/js/bootstrap-image-gallery.min.js"></script>
+  <script src="<?php echo base_url()?>js/chosen.jquery.min.js"></script>
   
   <!-- CSS -->  
   <link rel="stylesheet" href="<?php echo base_url()?>js/alertify/css/alertify.min.css" type="text/css"/>
@@ -30,15 +32,16 @@
   <link rel="stylesheet" href="<?php echo base_url()?>css/font-awesome.min.css">
   <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/fileinput.min.css" type="text/css"/>  
   <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/blueimp-gallery.min.css" type="text/css"/>
-  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap-image-gallery.min.css" type="text/css"/>
-
+  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap/css/bootstrap-image-gallery.min.css" type="text/css"/>  
+  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap-chosen.css"/>
   
   <script type="text/javascript">
     //override defaults    
-    $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip();});
-    alertify.defaults.theme.input = "form-control";
+    $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip();});    
+    alertify.defaults.theme.input = "form-control";    
     alertify.defaults.glossary.ok = '<span class="glyphicon glyphicon-ok"></span> Aceptar';
-    alertify.defaults.glossary.cancel = '<span class="glyphicon glyphicon-remove"></span> Cancelar';
+    alertify.defaults.glossary.cancel = '<span class="glyphicon glyphicon-remove"></span> Cancelar'; 
+
  </script>
     
   <title><?=$title?></title>

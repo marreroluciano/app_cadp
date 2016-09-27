@@ -29,7 +29,7 @@
   <div class="form-group form-group-sm">
     <label for="clave" class="col-sm-4 control-label"></label>
     <div class="col-sm-8">
-      <button type="submit" class="btn btn-login" title="Ingresar al Sistema"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresar</button>
+      <button type="submit" class="btn btn-login" data-toggle="tooltip" title="Ingresar al Sistema"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresar</button>
     </div>
   </div>
 
@@ -39,9 +39,9 @@
 
 
   <div class="col-xs-6">     
-    <h3> CADP - Gesti&oacute;n de cambios de turnos </h3>
-    <span>Si a&uacute;n no se encuentra registrado, haga click en </span>
-    <a href="<?php echo base_url(); ?>/sign_in/register" title="Registrarme como nuevo usuario">registrarme</a>
+    <h3><?=INITIAL_TITLE;?></h3>
+    <span><?=INITIAL_TEXT?></span>
+    <a href="<?php echo base_url(); ?>sign_in/register" data-toggle="tooltip" title="Registrarme como nuevo usuario">registrarme</a>
   </div>
   
 </div>

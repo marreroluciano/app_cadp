@@ -24,12 +24,12 @@
     }
 
     /* busca un usuario por dni */
-    function get_user_dni($dni){
+    /*function get_user_dni($dni){
       $this->db->select('id');
       $this->db->where('dni',$dni);
       $query = $this->db->get('user');
       return($query->result());
-    }
+    }*/
 
     /* busca un usuario por nombre de usuario */
     function get_user_username($user_name){

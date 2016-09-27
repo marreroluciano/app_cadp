@@ -25,30 +25,32 @@ function get_alerts(url, controller, method, model_method, value){
 
 /* comprueba los datos mínimos del formulario de registro de usuario */
 function verify_new_user_data(url){
-  var input = document.querySelectorAll("input");  
-  for (i = 0; i < input.length; i++) {
-    var value = input[i].value;
-    if (value.trim().length < 1){ alertify.notify('Faltan completar campos en el formulario.', 'error', 5, function(){  console.log('dismissed'); }); /*alertify.error('Faltan completar campos en el formulario.');*/ return false; }
+  var input = document.querySelectorAll("input");
+  for (i = 1; i < input.length; i++) {
+    var value = input[i].value;    
+    if (value.trim().length < 1){ alertify.notify(INCOMPLETE_FIELDS, 'error', 5, function(){  console.log('dismissed'); }); $( "#form_group_"+input[i].id).addClass( "has-error" ); $( "#"+input[i].id ).focus(); setTimeout( function(){ $( "#form_group_"+input[i].id).removeClass( "has-error" ); }, 5000); return false; }
   }
 
-  if ( ($('#dni').val().trim().length) < 7 ) { alertify.error('El DNI debe tener al menos 7 d&iacute;gitos.'); return false; }
+  if ( ($('#dni').val().trim().length) < 7 ) { alertify.error(INCOMPLETE_DNI); $( "#form_group_dni").addClass( "has-error" ); $( "#dni" ).focus(); setTimeout( function(){ $( "#form_group_dni").removeClass( "has-error" ); }, 5000); return false; }
 
   var regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
 
   // Se utiliza la funcion test() nativa de JavaScript
   if (!(regex.test($('#email').val().trim()))) {
-    alertify.error('La direcci&oacute;n de correo electr&oacute;nico no es v&aacute;lida.'); return false;
+    alertify.error(WRONG_EMAIL); $( "#form_group_email").addClass( "has-error" ); $( "#email" ).focus(); setTimeout( function(){ $( "#form_group_email").removeClass( "has-error" ); }, 5000); return false;
   }
 
-  if ( ($('#pass').val().trim().length) < 6 ) { alertify.error('La contrase&ntilde;a debe tener al menos 6 caracteres.'); return false; }
+  if ( ($('#user').val().trim().length) < 5 ) { alertify.error(USER_INCOMPLETE); $( "#form_group_user").addClass( "has-error" ); $( "#user" ).focus(); setTimeout( function(){ $( "#form_group_user").removeClass( "has-error" ); }, 5000); return false; }
+
+  if ( ($('#pass').val().trim().length) < 5 ) { alertify.error(PASS_INCOMPLETE); $( "#form_group_pass").addClass( "has-error" ); $( "#pass" ).focus(); setTimeout( function(){ $( "#form_group_pass").removeClass( "has-error" ); }, 5000); return false; }
 
 
-  if  (($('#pass').val().trim()) != ($('#confirm_pass').val().trim())) { alertify.error('Las contrase&ntilde;as no coinciden.'); return false; }
-  
-  alertify.defaults.glossary.title = '<strong>Confirmaci&oacute;n</strong>';  
-  alertify.confirm('Por favor, confirme la creaci&oacute;n del usuario.', function (e) {
+  if  (($('#pass').val().trim()) != ($('#confirm_pass').val().trim())) { alertify.error(NOT_MATCH_PASS); $( "#form_group_confirm_pass").addClass( "has-error" ); $( "#confirm_pass" ).focus(); setTimeout( function(){ $( "#form_group_confirm_pass").removeClass( "has-error" ); }, 5000); return false; } 
+
+  alertify.defaults.glossary.title = "<strong>"+CONFIRMATION_TITLE+"</strong>";  
+  alertify.confirm(CONFIRMATION_TEXT, function (e) {
            if (e) {
-             ajax_method(url, 'sign_in', 'insert_user');
+             ajax_method(url, 'sign_in', 'insert_user', 'result', 'modal_running_operation', 'close_modal_running_operation');
            }
   }).set('modal', true);
 }
@@ -155,7 +157,7 @@ function verify_request(url, method){
 }
 
 /* método ajax */
-function ajax_method(url, controller, method){
+function ajax_method(url, controller, method, id_result, id_modal_before, id_modal_success){
   var form = $('#form').serializeArray();
   var parameters = {
     "form": form
@@ -165,12 +167,12 @@ function ajax_method(url, controller, method){
     url:   url+'index.php/'+controller+'/'+method+'/',
     type:  'post',    
     beforeSend: function () {
-      $("#result").html("Procesando, espere por favor...");
-      $( "#modal_running_operation" ).trigger( "click" );
+      $("#"+id_result).html(WAITING_RESULT);
+      $( "#"+id_modal_before ).trigger( "click" );
     },
     success:  function (response) {
-      $("#result").html(response);
-      $( "#close_modal_running_operation" ).trigger( "click" );        
+      $("#"+id_result).html(response);
+      $( "#"+id_modal_success ).trigger( "click" );
     }
   });
 }
