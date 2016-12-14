@@ -33,8 +33,20 @@
     }
 
     function update_request($request_id, $data){
-      $this->db->where('id', $request_id);      
+      $this->db->where('id', $request_id);
       return($this->db->update('request', $data));
+    }
+    
+    function cancel_request($request_id){
+      $this->db->where('id', $request_id);
+      $this->db->where('id_request_state', 1);
+      $query = $this->db->get('request');
+      $result = $query->result();
+      if (sizeof($result)>0) {        
+        $this->db->where('id', $request_id);
+        $this->db->update('request', array('id_request_state' => 5));
+        return true;
+      } else { return false; }
     }
 }
 ?> 

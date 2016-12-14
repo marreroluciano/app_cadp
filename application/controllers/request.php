@@ -3,30 +3,35 @@
     function __construct(){
       parent::__construct();
       $this->load->helper('url');
-      $this->load->library('session');  
+      $this->load->library('session');
+      $this->load->model('user_model');
       $this->load->model('request_model');
       $this->load->model('type_request_model');
       $this->load->model('turn_model');
     }
       
     function index() {      
-      $requests = $this->request_model->get_user_requests($this->session->userdata['id']);
-      $view_data['requests'] = $requests;
-      $datos_layout["title"] = "CADP - Solicitudes";
-      $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
-      $datos_layout["content"] = $this->load->view('request/index_requests_view', $view_data, true);
-      $this->load->view('layout_view', $datos_layout);
+      if ($this->user_model->isLogin()) {
+        $requests = $this->request_model->get_user_requests($this->session->userdata['id']);
+        $view_data['requests'] = $requests;
+        $datos_layout["title"] = "CADP - Solicitudes";
+        $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+        $datos_layout["content"] = $this->load->view('request/index_requests_view', $view_data, true);
+        $this->load->view('layout_view', $datos_layout);
+      } else { redirect('/error_404', 'refresh'); }
    }
 
    function new_request(){
-     $request_types = $this->type_request_model->get_requests_types();
-     $turns = $this->turn_model->get_turns();     
-     $view_data['request_types'] = $request_types;
-     $view_data['turns'] = $turns;
-     $datos_layout["title"] = "CADP - Nueva Solicitud";
-     $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
-     $datos_layout["content"] = $this->load->view('request/new_request_view', $view_data, true);
-     $this->load->view('layout_view', $datos_layout);
+     if ($this->user_model->isLogin()) {
+       $request_types = $this->type_request_model->get_requests_types();
+       $turns = $this->turn_model->get_turns();     
+       $view_data['request_types'] = $request_types;
+       $view_data['turns'] = $turns;
+       $datos_layout["title"] = "CADP - Nueva Solicitud";
+       $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+       $datos_layout["content"] = $this->load->view('request/new_request_view', $view_data, true);
+       $this->load->view('layout_view', $datos_layout);
+     } else { redirect('/error_404', 'refresh'); }
    }
 
    function insert_request(){
@@ -34,8 +39,7 @@
        date_default_timezone_set('America/Argentina/Buenos_Aires');      
      
        $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';     
-       $config['allowed_types'] = 'gif|jpg|png';
-     
+       $config['allowed_types'] = 'gif|jpg|png';     
 
        $this->load->library('upload', $config);
        $this->upload->initialize($config);
@@ -152,7 +156,7 @@
          $output .= '</div>';
        }
        echo $output;
-     } else {redirect('/error_404', 'refresh');}  
+     } else {redirect('/error_404', 'refresh');}
    }
 
    function view($request_id = null){     
@@ -166,98 +170,32 @@
      } else {redirect('/error_404', 'refresh');}
    }
 
-   function edit($request_id = null){
-     $request = $this->request_model->get_user_request($request_id, $this->session->userdata['id']);
-     if (sizeof($request) > 0){
-       $request_types = $this->type_request_model->get_requests_types();
-       $turns = $this->turn_model->get_turns();     
-       $view_data['request_types'] = $request_types;
-       $view_data['turns'] = $turns;
-       $view_data['request'] = $request;
-       $datos_layout["title"] = "CADP - Editando solicitud";
-       $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
-       $datos_layout["content"] = $this->load->view('request/edit_request_view', $view_data, true);
-       $this->load->view('layout_view', $datos_layout);
-     } else {redirect('/error_404', 'refresh');}
-   }
+   function cancel_request(){
+     $request_id = $this->input->post('request_id');
+     $successful_operation = $this->request_model->cancel_request($request_id);
 
-   function edit_request(){
-     if (empty($_POST ) != true) {
-       $certificate = $this->input->post('certificate');
+     $salida = '';
+     if ($successful_operation) {
+       $salida.='<div class="alert alert-success alert-dismissible" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                 <strong><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></strong> Solicitud cancelada correctamente.
+                 </div>';
+       $salida.='<script type="text/javascript">';
+       $salida.= '$(document).ready(function(){';
+       $salida.= '$("#row_'.$request_id.'").css("text-decoration","line-through");';
+       $salida.= '$("#state_'.$request_id.'").html("<i class=\'fa fa-ban\' aria-hidden=\'true\' data-toggle=\'tooltip\' title=\'CANCELADA\'></i>");';
+       $salida.= '$("#cancel_button_'.$request_id.'").fadeOut("slow");';       
+       $salida.= '});';  
+       $salida.= '</script>';
 
-       $valid_upload = true;
-
-       if ($certificate != '') {
-         $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';         
-         $config['allowed_types'] = 'gif|jpg|png';
-         $this->load->library('upload', $config);
-         $this->upload->initialize($config);
-
-         if (!$this->upload->do_upload("certificate")){
-           $upload_error = $this->upload->display_errors();
-           $valid_upload = false;
-         } else {
-            $file_data = $this->upload->data();
-            $certificate = $file_data['file_name'];
-
-            $file_path = $config['upload_path'].'\\'.$this->input->post('attached');
-            $file_path = unlink($file_path);
-         }
-       } else { $certificate = $this->input->post('attached'); }
-
-       /* el upload fue exitoso o no se cambio el archivo que ya existia */
-       if ($valid_upload) {
-         $id_request_type = $this->input->post('request_types');
-         switch ($id_request_type) {
-           case 1:
-             $id_turn = $this->input->post('turn');
-             $value_date_from = null;
-             $value_date_end = null;
-             break;
-           case 2:
-             $date_from = str_replace('/', '-', $this->input->post('value_date_from'));
-             $date_end = str_replace('/', '-', $this->input->post('value_date_end'));
-             $date_from = date('Y-m-d', strtotime($date_from));
-             $date_end = date('Y-m-d', strtotime($date_end));
-             $id_turn = null;
-             break;
-         }        
-
-         date_default_timezone_set('America/Argentina/Buenos_Aires');
-         $date_update = date("Y-m-d h:i:s");
-         $data = array('date_update' => $date_update,                       
-                       'requested_shift' => $id_turn, 
-                       'start_date_justification' => $date_from, 
-                       'end_date_justification' => $date_end, 
-                       'reason' => $this->input->post('comments'),
-                       'attached' => $certificate
-                       );
-         $valid_update = $this->request_model->update_request($this->input->post('request_id'), $data);         
-
-         if ($valid_update > 0) {
-           $output = '<div class="row">';
-           $output.= '<div class="col-xs-12">';
-           $output.= '<div class="alert alert-success" role="alert"><i class="fa fa-thumbs-up" aria-hidden="true"></i> La solicitud ha sido editada correctamente.</div>';
-           $output.= '</div>';
-           $output.= '</div>';
-         } 
-       } else {
-         /* error al subir el archivo adjunto */
-         $output = '<div class="row">';
-         $output.= '<div class="col-xs-12">';
-         $output.= '<div class="alert alert-danger" role="alert"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> <strong>Error!</strong> Ha ocurrido un problema al subir el archivo: '.$upload_error.'</div>';
-         $output.= '</div>';
-         $output.= '</div>';
-        }
-       /* BOTON PARA REGRESAR */
-       $output .= '<div class="row">';
-       $output .= '<div class="col-xs-12">';
-       $output .= '<a href="'.base_url().'request" type="button" class="btn btn-success" data-toggle="tooltip" title="Volver al listado"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Volver al listado </a>';
-       $output .= '</div>';
-       $output .= '</div>';
-
-       echo $output;   
-     } else {redirect('/error_404', 'refresh');}
+     } else {
+        $salida.='<div class="alert alert-danger alert-dismissible" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                 <strong><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></strong> La solicitud no puede ser cancelada.
+                 </div>';
+     }    
+     
+     echo $salida;
    }
 } 
 ?> 

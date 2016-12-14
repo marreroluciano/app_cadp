@@ -47,10 +47,28 @@ function verify_new_user_data(url){
 
   if  (($('#pass').val().trim()) != ($('#confirm_pass').val().trim())) { alertify.error(NOT_MATCH_PASS); $( "#form_group_confirm_pass").addClass( "has-error" ); $( "#confirm_pass" ).focus(); setTimeout( function(){ $( "#form_group_confirm_pass").removeClass( "has-error" ); }, 5000); return false; } 
 
-  alertify.defaults.glossary.title = "<strong>"+CONFIRMATION_TITLE+"</strong>";  
+  alertify.defaults.glossary.title = "<strong>"+CONFIRMATION_TITLE+"</strong>";
   alertify.confirm(CONFIRMATION_TEXT, function (e) {
            if (e) {
-             ajax_method(url, 'sign_in', 'insert_user', 'result', 'modal_running_operation', 'close_modal_running_operation');
+             ajax_method(url, 'user', 'insert_user', 'result', 'modal_running_operation', 'close_modal_running_operation');
+           }
+  }).set('modal', true);
+}
+
+/* comprueba los datos mínimos del formulario de edición de los datos del usuario */
+function verify_edit_user_data(url){  
+  // Se utiliza la funcion test() nativa de JavaScript
+  var regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+  if (!(regex.test($('#email').val().trim()))) {
+    alertify.error(WRONG_EMAIL); $( "#form_group_email").addClass( "has-error" ); $( "#email" ).focus(); setTimeout( function(){ $( "#form_group_email").removeClass( "has-error" ); }, 5000); return false;
+  }
+
+  alertify.defaults.glossary.title = "<strong>"+CONFIRMATION_TITLE+"</strong>";
+  alertify.confirm(CONFIRMATION_TEXT, function (e) {
+           if (e) {
+             $("#student").prop('disabled', false);
+             $("#dni").prop('disabled', false);
+             ajax_method(url, 'user', 'edit_user', 'result', 'modal_running_operation', 'close_modal_running_operation');
            }
   }).set('modal', true);
 }
@@ -175,4 +193,28 @@ function ajax_method(url, controller, method, id_result, id_modal_before, id_mod
       $( "#"+id_modal_success ).trigger( "click" );
     }
   });
+}
+
+function cancel_request(url, request_id){
+  alertify.defaults.glossary.title = "<strong>"+CONFIRMATION_TITLE+"</strong>";
+  alertify.confirm(CONFIRMATION_TEXT, function (e) {
+           if (e) {
+             var parameters = {
+               "request_id": request_id
+             };
+             $.ajax({
+               data:  parameters,
+               url: url+'request/cancel_request',
+               type:  'post',    
+               beforeSend: function () {
+                 $("#result").html(WAITING_RESULT);
+                 $( "#modal_running_operation").trigger( "click" );
+               },
+               success:  function (response) {
+                 $("#result").html(response);
+                 $( "#close_modal_running_operation").trigger( "click" );
+               }
+             });             
+           }
+  }).set('modal', true);
 }
