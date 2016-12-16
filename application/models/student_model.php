@@ -30,9 +30,17 @@
 
     /* recupera un estudiante por su id */
     function get_student($student_id){
-      $this->db->where('id', $student_id);      
+      $this->db->select('student.id as student_id, dni, surname_and_name, file_number, turn.detail as turn');
+      $this->db->join('turn', 'turn.id = student.turn_id', 'left');
+      $this->db->where('student.id', $student_id);
       $query = $this->db->get('student');
       return($query->result());
+    }
+    
+    /* edita los datos del estudiante */
+    function edit_student($student_id, $data){
+      $this->db->where('id', $student_id);
+      return($this->db->update('student', $data));
     }
 }
 ?> 

@@ -6,12 +6,12 @@
       $this->load->model('user_model');
       $this->load->model('student_model');
       $this->load->library('encrypt');
-      $this->load->library('session');
+      $this->load->library('session');      
     }
       
-   function index () {    
+   function index () {
      if (!$this->user_model->isLogin()) {
-       $datos_layout["title"]   = "CADP - Ingreso al sistema";
+       $datos_layout["title"]   = ACRONYM." - Ingreso al sistema";
        $datos_layout["content"] = $this->load->view('sign_in_view', '', true);
        $this->load->view('layout_view', $datos_layout);
       } else {
@@ -82,8 +82,8 @@
       $output = '';
       switch ($model_method) {
         /*case 'dni': 
-          $user = $this->user_model->get_user_dni($value);
-          if ( sizeof($user) > 0 ) { 
+          $student = $this->student_model->get_student_dni($value);
+          if ( sizeof($student) > 0 ) { 
             $output.= '<div class="row" id="alert_dni" style="display: none;">';
             $output.= '<div class="col-xs-12">';
             $output.= '<div class="alert alert-danger" role="alert"><span class=" glyphicon glyphicon-alert"></span>'.ALREADY_EXISTS_DNI.'</div>';
@@ -134,53 +134,7 @@
           break;
       }      
       echo $output;
-    }
+    } else { redirect('/error_404', 'refresh'); }
    }
-
-   /* realiza el insert de un nuevo usuario en el sistema */
-   function insert_user(){
-     if (empty($_POST ) != true) {
-       $form = $this->input->post('form');
-
-       $student = $this->student_model->check_user_dni($form[1]['value'], $form[0]['value']);
-       $output = '';
-
-       if (sizeof($student) == 0) { 
-         $output.= '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span>'.NEW_USER_ERROR.' '.NOT_MATCH_DNI.'</div>';
-       } else {
-           $user = $this->user_model->get_user_username($form[3]['value']);
-           if (sizeof($user) > 0){
-             $output.= '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span>'.NEW_USER_ERROR.' '.EXISTING_USER.'</div>';
-           } else {              
-              /* usuario válido */              
-              $pass = $this->encrypt->encode($form[4]['value']);
-              $data = array('email' => $form[2]['value'], 'user' => $form[3]['value'], 'pass' => $pass, 'student_id' => $form[0]['value']);
-              $id_user = $this->user_model->insert_user($data);
-              /* se arma la salida */
-              $output.= '<div class="row"> <div class="col-xs-12">';
-              if ($id_user > 0) {
-                $output.= '<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up"></span>'.USER_CREATED_SUCCESSFULLY.'</div>';
-              } else {
-                $output.= '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span>'.NEW_USER_ERROR.' '.DATABASE_ERROR.'</div>';
-              }
-              $output.= '</div></div>';
-           }
-       }
-
-       /* BOTON PARA REGRESAR */
-       $output .= '<div class="row">';
-       $output .= '<div class="col-xs-12">';
-
-       $output .= '<a href="'.base_url().'" type="button" class="btn btn-success"><span class="glyphicon glyphicon-hand-left"></span> Volver </a>';
-
-       $output .= '</div>';
-       $output .= '</div>';
-
-       echo $output;
-
-     } else { redirect('/error_404', 'refresh'); }
-   }
-
-
 } 
 ?> 

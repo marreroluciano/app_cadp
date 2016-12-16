@@ -8,6 +8,7 @@
       $this->load->model('request_model');
       $this->load->model('type_request_model');
       $this->load->model('turn_model');
+      if (!$this->user_model->isLogin()) { redirect('/sign_in/', 'refresh'); }
     }
       
     function index() {      
@@ -35,7 +36,7 @@
    }
 
    function insert_request(){
-     if (empty($_POST ) != true) {
+     if ((empty($_POST ) != true) && ($this->user_model->isLogin())) {
        date_default_timezone_set('America/Argentina/Buenos_Aires');      
      
        $config['upload_path'] = 'C:\xampp_v1.8\htdocs\app_cadp\images\uploads';     
@@ -159,43 +160,46 @@
      } else {redirect('/error_404', 'refresh');}
    }
 
-   function view($request_id = null){     
-     $request = $this->request_model->get_user_request($request_id, $this->session->userdata['id']);
-     if (sizeof($request) > 0) {
-       $view_data['request'] = $request;
-       $datos_layout["title"] = "CADP - Ver solicitud";
-       $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
-       $datos_layout["content"] = $this->load->view('request/request_view', $view_data, true);
-       $this->load->view('layout_view', $datos_layout);
-     } else {redirect('/error_404', 'refresh');}
+   function view($request_id = null){
+     if ($this->user_model->isLogin()){
+       $request = $this->request_model->get_user_request($request_id, $this->session->userdata['id']);
+       if (sizeof($request) > 0) {
+         $view_data['request'] = $request;
+         $datos_layout["title"] = "CADP - Ver solicitud";
+         $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+         $datos_layout["content"] = $this->load->view('request/request_view', $view_data, true);
+         $this->load->view('layout_view', $datos_layout);
+       } else {redirect('/error_404', 'refresh');}
+     } else { redirect('/sign_in/', 'refresh'); } 
    }
 
    function cancel_request(){
-     $request_id = $this->input->post('request_id');
-     $successful_operation = $this->request_model->cancel_request($request_id);
+     if ((empty($_POST ) != true) && ($this->user_model->isLogin())) {
+       $request_id = $this->input->post('request_id');
+       $successful_operation = $this->request_model->cancel_request($request_id);
 
-     $salida = '';
-     if ($successful_operation) {
-       $salida.='<div class="alert alert-success alert-dismissible" role="alert">
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                 <strong><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></strong> Solicitud cancelada correctamente.
-                 </div>';
-       $salida.='<script type="text/javascript">';
-       $salida.= '$(document).ready(function(){';
-       $salida.= '$("#row_'.$request_id.'").css("text-decoration","line-through");';
-       $salida.= '$("#state_'.$request_id.'").html("<i class=\'fa fa-ban\' aria-hidden=\'true\' data-toggle=\'tooltip\' title=\'CANCELADA\'></i>");';
-       $salida.= '$("#cancel_button_'.$request_id.'").fadeOut("slow");';       
-       $salida.= '});';  
-       $salida.= '</script>';
-
-     } else {
-        $salida.='<div class="alert alert-danger alert-dismissible" role="alert">
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                 <strong><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></strong> La solicitud no puede ser cancelada.
-                 </div>';
-     }    
-     
-     echo $salida;
+       $output = '';
+       if ($successful_operation) {
+         $output.='<div class="alert alert-success alert-dismissible" role="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <strong><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></strong> Solicitud cancelada correctamente.
+                   </div>';
+         $output.='<script type="text/javascript">';
+         $output.= '$(document).ready(function(){';
+         $output.= '$("#row_'.$request_id.'").css("text-decoration","line-through");';
+         $output.= '$("#state_'.$request_id.'").html("<i class=\'fa fa-ban\' aria-hidden=\'true\' data-toggle=\'tooltip\' title=\'CANCELADA\'></i>");';
+         $output.= '$("#cancel_button_'.$request_id.'").fadeOut("slow");';       
+         $output.= '});';  
+         $output.= '</script>';
+       } 
+       else {
+         $output.='<div class="alert alert-danger alert-dismissible" role="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <strong><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></strong> La solicitud no puede ser cancelada.
+                   </div>';
+       }     
+       echo $output;
+     } else { redirect('/error_404', 'refresh'); }
    }
 } 
 ?> 
