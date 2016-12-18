@@ -1,11 +1,15 @@
 <?php
-  $turn = $student->turn; 
+  $file_number = $student->file_number;
+  if ($file_number == NULL) {
+    $file_number = 'Sin cargar';
+  }
+  $turn = $student->turn;
   if ($turn == NULL) {
     $turn = 'Sin turno';
   }
 ?>
 <div class="row">
-<div class="col-lg-12"><h3 class="page-header"><?=$student->surname_and_name;?> <small>(<?=$turn;?>)</small></h3></div>
+<div class="col-lg-12"><h3 class="page-header"><?=$student->surname_and_name;?> <small>(Legajo: <?=$file_number;?>)</small></h3></div>
 </div>
 
 <div class="row">
