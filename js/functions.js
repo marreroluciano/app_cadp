@@ -218,3 +218,15 @@ function cancel_request(url, request_id){
            }
   }).set('modal', true);
 }
+
+/* verifica si hay algo seleccionado */
+function veryfy_checked_input (url, name, controller, method, id_result, id_modal_before, id_modal_success){
+  if(!$("input[name="+name+"]:checked").val()) {
+    alertify.notify('<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Debe seleccionar alguna opción.', 'error', 5, function(){  console.log('dismissed'); });
+  } else {
+      alertify.defaults.glossary.title = "<strong>"+CONFIRMATION_TITLE+"</strong>";
+      alertify.confirm(CONFIRMATION_TEXT, function (e) {
+      if (e) { ajax_method(url, controller, method, id_result, id_modal_before, id_modal_success); }
+  }).set('modal', true);    
+  }  
+}

@@ -13,7 +13,7 @@
         $user = $this->user_model->get_user($this->session->userdata['id']);
         $student = $this->student_model->get_student($this->session->userdata['student_id']);
         $data_view['user'] = $user[0];
-        $data_view['student'] = $student[0];         
+        $data_view['student'] = $student[0];
 
         $datos_layout["title"] = ACRONYM.' - '.MY_USER_DATA_TITLE;
         $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
@@ -67,7 +67,7 @@
 
     /* realiza el update de un usuario en el sistema */
     function edit_user(){
-      if ((empty($_POST ) != true) && ($this->user_model->isLogin())) {        
+      if ((empty($_POST ) != true) && ($this->user_model->isLogin())) {
         $form = $this->input->post('form');
 
         $data = array('email' => $form[3]['value']);

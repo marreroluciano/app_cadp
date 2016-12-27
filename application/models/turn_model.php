@@ -17,5 +17,12 @@
       $query = $this->db->get('turn');
       return($query->result());
     }
+
+    /* obtiene los turnos según promoción */
+    function get_turn_promotion($promotion){
+      $this->db->where('promotion', $promotion);
+      $query = $this->db->get('turn');
+      return($query->result()); 
+    }
 }
 ?> 

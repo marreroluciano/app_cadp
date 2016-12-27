@@ -89,6 +89,12 @@ define('ACRONYM', 'CADP'); // Iniciales del Sistema.
 define('INITIAL_TITLE', 'CADP - Gesti&oacute;n del curso'); // título inicial del sistema.
 define('MY_USER_DATA_TITLE', ' Mis datos de usuario'); // título de la página de los datos del usuario.
 define('INITIAL_TEXT', 'Si es alumno de Conceptos de Algoritmos, Datos y Programas y se encuentra inscripto en Guaran&iacute;, entonces puede registrarse haciendo click en '); // texto inicial
+define('SELECT_TURN_TITLE', 'Elecci&oacute;n de la banda horaria'); // títlo de la elección de turno.
+define('SELECT_TURN_TEXT', 'Desde aqu&iacute; debe seleccionar la banda horaria disponible en la que desea cursar.'); // texto descriptivo de la elección de turno.
+define('SELECT_TURN_ERROR', ' Ha ocurrido un error. No es posible realizar la elecci&oacute;n del turno.'); // error en la selección del turno.
+define('SELECT_TURN_SUCCESSFULLY', ' El turno ha sido confirmado correctamente.'); // turno asignado correctamente.
+
+
 define('LOGIN_ERROR', ' El usuario y/o la contrase&ntilde;a son incorrectos.'); // error en el inicio de sesión
 //define('ALREADY_EXISTS_DNI', ' El DNI Por favor, ingrese su DNI correctamente.'); // error de que ya existe el DNI que se ha ingresado
 define('NOT_MATCH_DNI', ' El DNI ingresado no coincide con el alumno seleccionado. Por favor, seleccione e ingrese los datos correctamente.'); // error de coincidencia de DNI
@@ -96,7 +102,9 @@ define('EXISTING_USER', ' El nombre de usuario ingresado ya se encuentra en uso.
 define('NEW_USER_ERROR', ' El usuario no ha podido ser creado.'); // error al crear un nuevo usuario. 
 define('USER_CREATED_SUCCESSFULLY', ' El usuario ha sido creado correctamente. Ya puede ingresar utilizando su nombre de usuario y su clave.'); // usuario creado correctamete.
 define('DATABASE_ERROR', ' Ha ocurrido un error en la Base de Datos.'); // error en la Base de Datos.
-define('CREATING_NEW_USER', ' Creando el nuevo usuario, espere por favor...'); // creando un nuevo usuario.
-define('EDITING_USER_DATA', ' Editando los datos de usuario, espere por favor...'); // creando un nuevo usuario.
 define('USER_EDITED_SUCCESSFULLY', ' Los datos del usuario fueron editados correctamente.'); // usuario editado correctamente.
 define('USER_EDITED_ERROR', ' Ha ocurrido un problema y no fue posible editar los datos del usuario.'); // error al editar los datos del usuario.
+
+define('CREATING_NEW_USER', 'Creando el nuevo usuario, espere por favor...'); // creando un nuevo usuario.
+define('EDITING_USER_DATA', 'Editando los datos de usuario, espere por favor...'); // creando un nuevo usuario.
+define('SELECTING_TURN', 'Confirmando el turno elegido, espere por favor....'); // confirmación del turno elegido.

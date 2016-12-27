@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-xs-3"><i class="fa fa-clock-o fa-5x"></i></div>
         <div class="col-xs-9 text-right">
-          <div class="huge"><?=$turn;?></div>
+          <div class="huge"><small><?=$turn;?></small></div>
           <div>Elcci&oacute;n de turno</div>
         </div>
       </div>
