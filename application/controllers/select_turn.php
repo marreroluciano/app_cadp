@@ -6,12 +6,18 @@
       $this->load->model('user_model');
       $this->load->model('student_model');
       $this->load->model('turn_model');
+      $this->load->model('flag_model');
       if (!$this->user_model->isLogin()) { redirect('/sign_in/', 'refresh'); }
     }
 
     function index () {
-      if ($this->user_model->isLogin()) {
-        $student = $this->student_model->get_student($this->session->userdata['student_id']);
+      $student = $this->student_model->get_student($this->session->userdata['student_id']);
+      $has_turn = $student[0]->turn != NULL;
+      $flag = $this->flag_model->get_flag(FLAG_TURN_KEY_VALUE);
+      $flag_value = $flag[0]->value;
+
+      if (($this->user_model->isLogin()) && (!$has_turn) && ($flag_value)) {
+        
         $turns = $this->turn_model->get_turn_promotion($student[0]->promotion);
         $data_view['student'] = $student[0];
         $data_view['turns'] = $turns;
@@ -20,7 +26,7 @@
         $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
         $datos_layout["content"] = $this->load->view('user/select_turn_view', $data_view, true);
         $this->load->view('layout_view', $datos_layout);
-      }
+      } else {  redirect('/error_404', 'refresh'); }
     }
 
     function set_turn(){
