@@ -5,8 +5,9 @@
       $this->load->helper('url');
       $this->load->model('user_model');
       $this->load->model('student_model');
+      $this->load->model('flag_model');
       $this->load->library('encrypt');
-      $this->load->library('session');      
+      $this->load->library('session');
     }
       
    function index () {
@@ -17,7 +18,21 @@
       } else {
          $data_view['count_requests'] = $this->user_model->count_requests($this->session->userdata['id']);
          $student = $this->student_model->get_student($this->session->userdata['student_id']);
+         if (($student[0]->file_number) == NULL) {
+           $file_number = 'Sin cargar';
+         } else { $file_number = $student[0]->file_number; }
+
+         $has_turn = false;
+         if (($student[0]->turn) == NULL) {
+           $turn = 'Sin turno';
+         } else { $turn = $student[0]->turn; $has_turn = true; }
+
+         $flag = $this->flag_model->get_flag(FLAG_TURN_KEY_VALUE);
          $data_view['student'] = $student[0];
+         $data_view['flag_value'] = $flag[0]->value;
+         $data_view['file_number'] = $file_number;
+         $data_view['turn'] = $turn;
+         $data_view['has_turn'] = $has_turn;
 
          $datos_layout["title"]   = "CADP";
          $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);

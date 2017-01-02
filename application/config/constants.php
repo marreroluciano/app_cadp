@@ -93,7 +93,7 @@ define('SELECT_TURN_TITLE', 'Elecci&oacute;n de la banda horaria'); // títlo de
 define('SELECT_TURN_TEXT', 'Desde aqu&iacute; debe seleccionar la banda horaria disponible en la que desea cursar.'); // texto descriptivo de la elección de turno.
 define('SELECT_TURN_ERROR', ' Ha ocurrido un error. No es posible realizar la elecci&oacute;n del turno.'); // error en la selección del turno.
 define('SELECT_TURN_SUCCESSFULLY', ' El turno ha sido confirmado correctamente.'); // turno asignado correctamente.
-
+define('FLAG_TURN_KEY_VALUE', 1); // valor clave para habilitar la selección de turnos.
 
 define('LOGIN_ERROR', ' El usuario y/o la contrase&ntilde;a son incorrectos.'); // error en el inicio de sesión
 //define('ALREADY_EXISTS_DNI', ' El DNI Por favor, ingrese su DNI correctamente.'); // error de que ya existe el DNI que se ha ingresado
