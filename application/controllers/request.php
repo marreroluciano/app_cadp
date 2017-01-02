@@ -5,14 +5,18 @@
       $this->load->helper('url');
       $this->load->library('session');
       $this->load->model('user_model');
+      $this->load->model('student_model');
       $this->load->model('request_model');
       $this->load->model('type_request_model');
       $this->load->model('turn_model');
       if (!$this->user_model->isLogin()) { redirect('/sign_in/', 'refresh'); }
     }
       
-    function index() {      
-      if ($this->user_model->isLogin()) {
+    function index() {
+      $student = $this->student_model->get_student($this->session->userdata['student_id']);      
+      $has_turn = $student[0]->turn != NULL;
+
+      if (($this->user_model->isLogin()) && ($has_turn)) {
         $requests = $this->request_model->get_user_requests($this->session->userdata['id']);
         $view_data['requests'] = $requests;
         $datos_layout["title"] = "CADP - Solicitudes";
