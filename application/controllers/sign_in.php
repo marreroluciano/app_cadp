@@ -15,8 +15,7 @@
        $datos_layout["title"]   = ACRONYM." - Ingreso al sistema";
        $datos_layout["content"] = $this->load->view('sign_in_view', '', true);
        $this->load->view('layout_view', $datos_layout);
-      } else {
-         $data_view['count_requests'] = $this->user_model->count_requests($this->session->userdata['id']);
+      } else {         
          $student = $this->student_model->get_student($this->session->userdata['student_id']);
          if (($student[0]->file_number) == NULL) {
            $file_number = 'Sin cargar';
@@ -28,6 +27,7 @@
          } else { $turn = $student[0]->turn; $has_turn = true; }
 
          $flag = $this->flag_model->get_flag(FLAG_TURN_KEY_VALUE);
+         $data_view['count_requests'] = $this->user_model->count_requests($this->session->userdata['id']);
          $data_view['student'] = $student[0];
          $data_view['flag_value'] = $flag[0]->value;
          $data_view['file_number'] = $file_number;
@@ -50,10 +50,25 @@
          $data_session = array('id' => $user[0]->id,'user' => $user[0]->user, 'student_id' => $user[0]->student_id);
          $student = $this->student_model->get_student($user[0]->student_id);
 
+         if (($student[0]->file_number) == NULL) {
+           $file_number = 'Sin cargar';
+         } else { $file_number = $student[0]->file_number; }
+
+         $has_turn = false;
+         if (($student[0]->turn) == NULL) {
+           $turn = 'Sin turno';
+         } else { $turn = $student[0]->turn; $has_turn = true; }
+
+         $flag = $this->flag_model->get_flag(FLAG_TURN_KEY_VALUE);
+
          $this->session->set_userdata($data_session);
 
          $data_view['count_requests'] = $this->user_model->count_requests($user[0]->id);
          $data_view['student'] = $student[0];
+         $data_view['file_number'] = $file_number;
+         $data_view['turn'] = $turn;
+         $data_view['flag_value'] = $flag[0]->value;
+         $data_view['has_turn'] = $has_turn;
 
          $datos_layout["title"]   = "CADP";
          $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
