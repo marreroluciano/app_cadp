@@ -48,5 +48,12 @@
         return true;
       } else { return false; }
     }
+
+    /* retorna la cantidad de solicitudes para un usuario */
+    function count_requests ($user_id){      
+      $this->db->from('request');      
+      $this->db->where('user_id',$user_id);
+      return($this->db->count_all_results());
+    }
 }
 ?> 

@@ -56,15 +56,38 @@
       <div class="row">
         <div class="col-xs-3"><i class="fa fa-calendar-times-o fa-5x"></i></div>
         <div class="col-xs-9 text-right">
-          <div class="huge">0</div>
+          <div class="huge"><?=$number_absences?></div>
           <div>Mis inasistencias</div>
         </div>
       </div>
     </div>
     <?php if ($has_turn) { ?>
-    <a href="<?php echo base_url();?>" data-toggle="tooltip" title="Mis inasistencias">
+    <a href="<?php echo base_url();?>absent/" data-toggle="tooltip" title="Mis inasistencias">
     <div class="panel-footer">
       <span class="pull-left">Inasistencias</span>
+      <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+      <div class="clearfix"></div>
+    </div>
+    </a>
+    <?php } ?>
+  </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+  <div class="panel panel-green">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-xs-3"><i class="fa fa-calendar-times-o fa-5x"></i></div>
+        <div class="col-xs-9 text-right">
+          <div class="huge">0</div>
+          <div>Mis ex&aacute;menes</div>
+        </div>
+      </div>
+    </div>
+    <?php if ($has_turn) { ?>
+    <a href="<?php echo base_url();?>" data-toggle="tooltip" title="Mis ex&aacute;menes">
+    <div class="panel-footer">
+      <span class="pull-left">Ex&aacute;menes</span>
       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
       <div class="clearfix"></div>
     </div>

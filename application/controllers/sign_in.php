@@ -4,7 +4,9 @@
       parent::__construct();
       $this->load->helper('url');
       $this->load->model('user_model');
+      $this->load->model('request_model');
       $this->load->model('student_model');
+      $this->load->model('student_attendance_list_model');
       $this->load->model('flag_model');
       $this->load->library('encrypt');
       $this->load->library('session');
@@ -27,7 +29,8 @@
          } else { $turn = $student[0]->turn; $has_turn = true; }
 
          $flag = $this->flag_model->get_flag(FLAG_TURN_KEY_VALUE);
-         $data_view['count_requests'] = $this->user_model->count_requests($this->session->userdata['id']);
+         $data_view['count_requests'] = $this->request_model->count_requests($this->session->userdata['id']);
+         $data_view['number_absences'] = $this->student_attendance_list_model->number_absences($this->session->userdata['student_id'], 1);         
          $data_view['student'] = $student[0];
          $data_view['flag_value'] = $flag[0]->value;
          $data_view['file_number'] = $file_number;
@@ -63,7 +66,8 @@
 
          $this->session->set_userdata($data_session);
 
-         $data_view['count_requests'] = $this->user_model->count_requests($user[0]->id);
+         $data_view['count_requests'] = $this->request_model->count_requests($user[0]->id);
+         $data_view['number_absences'] = $this->student_attendance_list_model->number_absences($this->session->userdata['student_id'], 1);         
          $data_view['student'] = $student[0];
          $data_view['file_number'] = $file_number;
          $data_view['turn'] = $turn;

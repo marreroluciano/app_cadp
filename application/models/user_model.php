@@ -43,14 +43,6 @@
       $this->db->where('user',$user_name);
       $query = $this->db->get('user');
       return($query->result());
-    }
-
-    /* retorna la cantidad de solicitudes para un usuario */
-    function count_requests ($user_id){      
-      $this->db->from('user');
-      $this->db->join('request', 'user_id = user.id');
-      $this->db->where('user.id',$user_id);
-      return($this->db->count_all_results());
-    }
+    }    
 }
 ?> 
