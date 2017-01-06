@@ -17,8 +17,8 @@
   <tbody>
     <?php foreach ($absents as $key => $value) { ?>
     <tr>
-      <?php $datestring = '%d/%m/%Y'; $timestamp = strtotime($value->date); ?> 
-      <td><small><?=mdate($datestring, $timestamp);?> </small></td>
+      <?php $datestring = '%d/%m/%Y'; $timestamp = strtotime($value->date); ?>
+      <td><small><?=mdate($datestring, $timestamp);?></small></td>
       <td><small><?=$value->detail; ?></small></td>
     </tr>        
     <?php } ?>  

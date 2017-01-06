@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-xs-3"><i class="fa fa-clock-o fa-5x"></i></div>
         <div class="col-xs-9 text-right">
-          <div class="huge"><small><?=$turn;?></small></div>
+          <div class="huge"><small><?=$turn; ?></small></div>
           <div>Turno de asistencia</div>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div class="row">
         <div class="col-xs-3"><i class="fa fa-inbox fa-5x"></i></div>
         <div class="col-xs-9 text-right">
-          <div class="huge"><?=$count_requests;?></div>
+          <div class="huge"><?=$count_requests; ?></div>
           <div>Mis solicitudes</div>
         </div>
       </div>
@@ -56,7 +56,7 @@
       <div class="row">
         <div class="col-xs-3"><i class="fa fa-calendar-times-o fa-5x"></i></div>
         <div class="col-xs-9 text-right">
-          <div class="huge"><?=$number_absences?></div>
+          <div class="huge"><?=$number_absences; ?></div>
           <div>Mis inasistencias</div>
         </div>
       </div>
@@ -77,17 +77,17 @@
   <div class="panel panel-green">
     <div class="panel-heading">
       <div class="row">
-        <div class="col-xs-3"><i class="fa fa-calendar-times-o fa-5x"></i></div>
+        <div class="col-xs-3"><i class="fa fa-pencil-square-o fa-5x"></i></div>
         <div class="col-xs-9 text-right">
-          <div class="huge">0</div>
-          <div>Mis ex&aacute;menes</div>
+          <div class="huge"><?=$number_evaluations; ?></div>
+          <div>Mis evaluaciones</div>
         </div>
       </div>
     </div>
     <?php if ($has_turn) { ?>
-    <a href="<?php echo base_url();?>" data-toggle="tooltip" title="Mis ex&aacute;menes">
+    <a href="<?php echo base_url();?>evaluation" data-toggle="tooltip" title="Mis evaluaciones">
     <div class="panel-footer">
-      <span class="pull-left">Ex&aacute;menes</span>
+      <span class="pull-left">Evaluaciones</span>
       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
       <div class="clearfix"></div>
     </div>
