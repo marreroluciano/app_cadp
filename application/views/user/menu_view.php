@@ -18,7 +18,7 @@
             
             <ul class="nav navbar-nav">              
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Men&uacute;<span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i> Men&uacute;<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li id="request" data-toggle="tooltip" title="Mis solicitudes"><a href="<?php echo base_url();?>request/"><i class="fa fa-inbox" aria-hidden="true"></i> Solicitudes</a></li>
                 <li id="absent" data-toggle="tooltip" title="Mis inasistencias"><a href="<?php echo base_url();?>absent/"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> Inasistencias</a></li>
