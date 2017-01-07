@@ -85,7 +85,7 @@
       </div>
     </div>
     <?php if ($has_turn) { ?>
-    <a href="<?php echo base_url();?>evaluation" data-toggle="tooltip" title="Mis evaluaciones">
+    <a href="<?php echo base_url();?>evaluation/" data-toggle="tooltip" title="Mis evaluaciones">
     <div class="panel-footer">
       <span class="pull-left">Evaluaciones</span>
       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -97,3 +97,13 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    change_class('menu', '');
+    change_class('request', '');
+    change_class('start', 'active');
+    change_class('absent', '');
+    change_class('evaluation', '');
+  });
+</script>

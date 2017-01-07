@@ -38,3 +38,13 @@
   <a href="<?=base_url()?>" type="button" class="btn btn-success" data-toggle="tooltip" title="Volver al inicio"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Volver al inicio </a>
 </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    change_class('menu', 'active');
+    change_class('request', '');
+    change_class('start', '');
+    change_class('absent', 'active');
+    change_class('evaluation', '');
+  });
+</script>
