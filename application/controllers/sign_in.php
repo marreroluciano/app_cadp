@@ -39,8 +39,10 @@
          $data_view['turn'] = $turn;
          $data_view['has_turn'] = $has_turn;
 
+         $data_menu_view['has_turn'] = $has_turn;
+
          $datos_layout["title"]   = "CADP";
-         $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+         $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view, true);
          $datos_layout["content"] = $this->load->view('user/initial_user_view', $data_view, true);
          $this->load->view('layout_view', $datos_layout);
       }
@@ -77,8 +79,10 @@
          $data_view['flag_value'] = $flag[0]->value;
          $data_view['has_turn'] = $has_turn;
 
+         $data_menu_view['has_turn'] = $has_turn;
+
          $datos_layout["title"]   = "CADP";
-         $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+         $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view , true);
          $datos_layout["content"] = $this->load->view('user/initial_user_view', $data_view, true);
          $this->load->view('layout_view', $datos_layout);
        } else {

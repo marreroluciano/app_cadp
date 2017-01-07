@@ -17,8 +17,10 @@
         $evaluations = $this->evaluation_model->get_evaluations($this->session->userdata['student_id']);
         $data_view['evaluations'] = $evaluations;
 
+        $data_menu_view['has_turn'] = $has_turn;
+
         $datos_layout["title"] = "CADP - Evaluaciones";
-        $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+        $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view, true);
         $datos_layout["content"] = $this->load->view('evaluation/index_evaluation_view', $data_view, true);
         $this->load->view('layout_view', $datos_layout);
 

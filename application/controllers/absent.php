@@ -23,8 +23,10 @@
         $data_view['number_absences'] = $number_absences;
         $data_view['number_excused_absences'] = $number_excused_absences;
 
+        $data_menu_view['has_turn'] = $has_turn;
+
         $datos_layout["title"] = "CADP - Inasistencias";
-        $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+        $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view, true);
         $datos_layout["content"] = $this->load->view('absent/index_absent_view', $data_view, true);
         $this->load->view('layout_view', $datos_layout);
 

@@ -20,9 +20,14 @@
             <li class="dropdown"  id="menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i> Men&uacute;<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li id="request" data-toggle="tooltip" title="Mis solicitudes"><a href="<?php echo base_url();?>request/"><i class="fa fa-inbox" aria-hidden="true"></i> Solicitudes</a></li>
-                <li id="absent" data-toggle="tooltip" title="Mis inasistencias"><a href="<?php echo base_url();?>absent/"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> Inasistencias</a></li>
-                <li id="evaluation" data-toggle="tooltip" title="Mis ex&aacute;menes"><a href="<?php echo base_url();?>evaluation/"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Ex&aacute;menes</a></li>
+                <?php
+                  if ($has_turn) {
+                    $href_request = 'request/'; $href_absent = 'absent/'; $href_evaluation = 'evaluation/'; $style = '';
+                  } else { $href_request = ''; $href_absent = ''; $href_evaluation = ''; $style = 'text-decoration: line-through;'; }
+                ?>
+                <li id="request" data-toggle="tooltip" title="Mis solicitudes" style="<?=$style?>"><a href="<?=base_url().$href_request;?>"><i class="fa fa-inbox" aria-hidden="true"></i> Solicitudes</a></li>
+                <li id="absent" data-toggle="tooltip" title="Mis inasistencias" style="<?=$style?>"><a href="<?php echo base_url().$href_absent;?>"><i class="fa fa-calendar-times-o" aria-hidden="true"></i> Inasistencias</a></li>
+                <li id="evaluation" data-toggle="tooltip" title="Mis ex&aacute;menes" style="<?=$style?>"><a href="<?php echo base_url().$href_evaluation;?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Ex&aacute;menes</a></li>
               </ul>
             </li>
             </ul>

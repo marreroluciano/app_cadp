@@ -19,21 +19,26 @@
       if (($this->user_model->isLogin()) && ($has_turn)) {
         $requests = $this->request_model->get_user_requests($this->session->userdata['student_id']);
         $view_data['requests'] = $requests;
+        $data_menu_view['has_turn'] = $has_turn;
         $datos_layout["title"] = "CADP - Solicitudes";
-        $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+        $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view, true);
         $datos_layout["content"] = $this->load->view('request/index_requests_view', $view_data, true);
         $this->load->view('layout_view', $datos_layout);
       } else { redirect('/error_404', 'refresh'); }
    }
 
    function new_request(){
-     if ($this->user_model->isLogin()) {
+    $student = $this->student_model->get_student($this->session->userdata['student_id']);
+    $has_turn = $student[0]->turn != NULL;
+
+     if (($this->user_model->isLogin()) && ($has_turn)) {
        $request_types = $this->type_request_model->get_requests_types();
        $turns = $this->turn_model->get_turns();     
        $view_data['request_types'] = $request_types;
        $view_data['turns'] = $turns;
+       $data_menu_view['has_turn'] = $has_turn;
        $datos_layout["title"] = "CADP - Nueva Solicitud";
-       $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+       $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view, true);
        $datos_layout["content"] = $this->load->view('request/new_request_view', $view_data, true);
        $this->load->view('layout_view', $datos_layout);
      } else { redirect('/error_404', 'refresh'); }
@@ -165,12 +170,16 @@
    }
 
    function view($request_id = null){
-     if ($this->user_model->isLogin()){
+     $student = $this->student_model->get_student($this->session->userdata['student_id']);
+     $has_turn = $student[0]->turn != NULL;
+
+     if (($this->user_model->isLogin()) && ($has_turn)) {
        $request = $this->request_model->get_user_request($request_id, $this->session->userdata['student_id']);
        if (sizeof($request) > 0) {
          $view_data['request'] = $request;
+         $data_menu_view['has_turn'] = $has_turn;
          $datos_layout["title"] = "CADP - Ver solicitud";
-         $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+         $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view, true);
          $datos_layout["content"] = $this->load->view('request/request_view', $view_data, true);
          $this->load->view('layout_view', $datos_layout);
        } else {redirect('/error_404', 'refresh');}
