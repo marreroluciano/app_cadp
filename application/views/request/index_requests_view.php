@@ -35,7 +35,7 @@
   <?php if ($value->id_request_state == 5) { $style.= 'text-decoration: line-through;'; } ?>
   <tr id="row_<?=$value->id; ?>" style="<?=$style;?>">
     <?php $date = date_create($value->date); ?>
-  	<td><small><?=date_format($date, 'd/m/Y - h:i:s'); ?></small></td>
+  	<td><small><?=date_format($date, 'd/m/Y - h:i'); ?></small></td>
   	<td><small><?=$value->type_request_detail; ?></small></td>    
   	<td id="state_<?=$value->id; ?>"><i class="<?=$value->request_class; ?>" aria-hidden="true" data-toggle="tooltip" title="<?=$value->request_state_detail; ?>"></i></td>
   	<td><small>

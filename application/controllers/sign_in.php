@@ -30,7 +30,7 @@
          } else { $turn = $student[0]->turn; $has_turn = true; }
 
          $flag = $this->flag_model->get_flag(FLAG_TURN_KEY_VALUE);
-         $data_view['count_requests'] = $this->request_model->count_requests($this->session->userdata['id']);
+         $data_view['count_requests'] = $this->request_model->count_requests($this->session->userdata['student_id']);
          $data_view['number_absences'] = $this->student_attendance_list_model->number_absences($this->session->userdata['student_id'], 1);
          $data_view['number_evaluations'] = $this->evaluation_model->number_evaluations($this->session->userdata['student_id']);
          $data_view['student'] = $student[0];
@@ -68,7 +68,7 @@
 
          $this->session->set_userdata($data_session);
 
-         $data_view['count_requests'] = $this->request_model->count_requests($user[0]->id);
+         $data_view['count_requests'] = $this->request_model->count_requests($this->session->userdata['student_id']);
          $data_view['number_absences'] = $this->student_attendance_list_model->number_absences($this->session->userdata['student_id'], 1);
          $data_view['number_evaluations'] = $this->evaluation_model->number_evaluations($this->session->userdata['student_id']);
          $data_view['student'] = $student[0];

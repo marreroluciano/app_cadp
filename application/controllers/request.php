@@ -17,7 +17,7 @@
       $has_turn = $student[0]->turn != NULL;
 
       if (($this->user_model->isLogin()) && ($has_turn)) {
-        $requests = $this->request_model->get_user_requests($this->session->userdata['id']);
+        $requests = $this->request_model->get_user_requests($this->session->userdata['student_id']);
         $view_data['requests'] = $requests;
         $datos_layout["title"] = "CADP - Solicitudes";
         $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
@@ -84,7 +84,7 @@
                        'reason' => $this->input->post('comments'),
                        'attached' => $certificate,
                        'id_request_type' => $id_request_type,
-                       'user_id' => $this->session->userdata['id'],
+                       'student_id' => $this->session->userdata['student_id'],
                        'id_request_state' => 1);
          $valid_insert = $this->request_model->insert_request($data);         
          if ($valid_insert > 0) { $valid_operation = true; }
@@ -166,7 +166,7 @@
 
    function view($request_id = null){
      if ($this->user_model->isLogin()){
-       $request = $this->request_model->get_user_request($request_id, $this->session->userdata['id']);
+       $request = $this->request_model->get_user_request($request_id, $this->session->userdata['student_id']);
        if (sizeof($request) > 0) {
          $view_data['request'] = $request;
          $datos_layout["title"] = "CADP - Ver solicitud";
@@ -180,7 +180,7 @@
    function cancel_request(){
      if ((empty($_POST ) != true) && ($this->user_model->isLogin())) {
        $request_id = $this->input->post('request_id');
-       $successful_operation = $this->request_model->cancel_request($request_id);
+       $successful_operation = $this->request_model->cancel_request($request_id, $this->session->userdata['student_id']);
 
        $output = '';
        if ($successful_operation) {
