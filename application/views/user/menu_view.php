@@ -48,9 +48,9 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> (<?=$this->session->userdata['user']; ?>) <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url();?>user/my_data" title="Configuraci&oacute;n de mis datos"><i class="fa fa-briefcase" aria-hidden="true"></i> Mis datos</a></li>
-                <li><a href="#" title="Configuraci&oacute;n de la contrase&ntilde;a de usuario"><i class="fa fa-unlock" aria-hidden="true"></i> Cambiar contrase&ntilde;a</a></li>
-                <li><a href="<?php echo base_url();?>sign_in/close_session" title="Cerrar la sesi&oacute;n actual"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesi&oacute;n</a></li>                
+                <li><a href="<?=base_url();?>user/my_data" data-toggle="tooltip" title="Configuraci&oacute;n de mis datos"><i class="fa fa-briefcase" aria-hidden="true"></i> Mis datos</a></li>
+                <li><a href="<?=base_url();?>change_password/" data-toggle="tooltip" title="Configuraci&oacute;n de la contrase&ntilde;a de usuario"><i class="fa fa-unlock" aria-hidden="true"></i> Cambiar contrase&ntilde;a</a></li>
+                <li><a href="<?=base_url();?>sign_in/close_session" data-toggle="tooltip" title="Cerrar la sesi&oacute;n actual"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesi&oacute;n</a></li>                
               </ul>
             </li>
           </ul>
