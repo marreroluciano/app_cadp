@@ -9,14 +9,19 @@
     }
       
     function my_data () {
+      $student = $this->student_model->get_student($this->session->userdata['student_id']);
+      $has_turn = $student[0]->turn != NULL;
+
       if ($this->user_model->isLogin()) {
         $user = $this->user_model->get_user($this->session->userdata['id']);
         $student = $this->student_model->get_student($this->session->userdata['student_id']);
         $data_view['user'] = $user[0];
         $data_view['student'] = $student[0];
 
+        $data_menu_view['has_turn'] = $has_turn;
+
         $datos_layout["title"] = ACRONYM.' - '.MY_USER_DATA_TITLE;
-        $datos_layout["user_menu"] = $this->load->view('user/menu_view', '', true);
+        $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view, true);
         $datos_layout["content"] = $this->load->view('user/my_data_view', $data_view, true);
         $this->load->view('layout_view', $datos_layout);
       }      
@@ -90,6 +95,20 @@
         echo $output;
 
       } else { redirect('/error_404', 'refresh'); }
+    }
+
+    function change_password(){
+      $student = $this->student_model->get_student($this->session->userdata['student_id']);
+      $has_turn = $student[0]->turn != NULL;
+
+      if ($this->user_model->isLogin()) {
+        $data_menu_view['has_turn'] = $has_turn;
+
+        $datos_layout["title"] = ACRONYM.' - Configurar contrase&ntilde;a';
+        $datos_layout["user_menu"] = $this->load->view('user/menu_view', $data_menu_view, true);
+        $datos_layout["content"] = $this->load->view('user/change_password_view', '', true);
+        $this->load->view('layout_view', $datos_layout);
+      }
     }
   }
 ?> 

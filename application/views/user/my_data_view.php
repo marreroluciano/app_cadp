@@ -93,3 +93,16 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    change_class('menu', '');
+    change_class('request', '');
+    change_class('start', '');
+    change_class('absent', '');
+    change_class('evaluation', '');
+    change_class('user_menu', 'active');
+    change_class('my_data', 'active');
+    change_class('change_password', '');
+  });
+</script>

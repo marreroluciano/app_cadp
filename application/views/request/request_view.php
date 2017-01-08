@@ -83,8 +83,13 @@
   
 <script>
   $(document).ready(function(){   
-   change_class('request', 'active');
-   change_class('start', '');
-   change_class('contact', '');
+   change_class('menu', 'active');
+    change_class('request', 'active');
+    change_class('start', '');
+    change_class('absent', '');
+    change_class('evaluation', '');
+    change_class('user_menu', '');
+    change_class('my_data', '');
+    change_class('change_password', '');
   });
 </script>
