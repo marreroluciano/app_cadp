@@ -14,7 +14,7 @@
 
     /* obtiene un usuario por su id */
     function get_user($user_id){
-      $this->db->select('email, user');
+      $this->db->select('email, user, pass');
       $this->db->where('id',$user_id);
       $query = $this->db->get('user');
       return($query->result());

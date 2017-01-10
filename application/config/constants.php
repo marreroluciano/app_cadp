@@ -104,7 +104,11 @@ define('USER_CREATED_SUCCESSFULLY', ' El usuario ha sido creado correctamente. Y
 define('DATABASE_ERROR', ' Ha ocurrido un error en la Base de Datos.'); // error en la Base de Datos.
 define('USER_EDITED_SUCCESSFULLY', ' Los datos del usuario fueron editados correctamente.'); // usuario editado correctamente.
 define('USER_EDITED_ERROR', ' Ha ocurrido un problema y no fue posible editar los datos del usuario.'); // error al editar los datos del usuario.
+define('ERROR_EDITING_PASSWORD', ' Ha ocurrido un problema y no fue posible editar la contrase&ntilde;a del usuario.'); // error al editar la contraseña del usuario.
+define('PASSWORD_EDITED_CORRECTLY', ' La contrase&ntilde;a del usuario ha sido cambiada correctamente.'); // cambio de contraseña correcto.
+
 
 define('CREATING_NEW_USER', 'Creando el nuevo usuario, espere por favor...'); // creando un nuevo usuario.
 define('EDITING_USER_DATA', 'Editando los datos de usuario, espere por favor...'); // creando un nuevo usuario.
-define('SELECTING_TURN', 'Confirmando el turno elegido, espere por favor....'); // confirmación del turno elegido.
+define('SELECTING_TURN', 'Confirmando el turno elegido, espere por favor...'); // confirmación del turno elegido.
+define('CHANGE_PASSWORD_DATA', 'Cambiando la contrase&ntilde;a del usuario, espere por favor...'); // confirmación del cambio de contraseña.

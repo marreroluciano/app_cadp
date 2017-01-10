@@ -230,3 +230,44 @@ function veryfy_checked_input (url, name, controller, method, id_result, id_moda
   }).set('modal', true);    
   }  
 }
+
+/* verifica los inputs del cambio de contraseña */
+function verify_change_password(url){
+  var input = document.querySelectorAll("input");
+  for (i = 0; i < input.length; i++) {
+    var value = input[i].value;   
+    if ( (value.trim().length) < 6) {
+      alertify.error(PASS_INCOMPLETE);
+      $( "#"+input[i].id).focus();
+      switch(input[i].id) {
+        case 'current_password': 
+          $( "#form_group_current_password").addClass( "has-error" );
+          setTimeout( function(){ $( "#form_group_current_password").removeClass( "has-error" ); }, 5000);
+        break;
+        case 'new_password': 
+          $( "#form_group_new_password").addClass( "has-error" );
+          setTimeout( function(){ $( "#form_group_new_password").removeClass( "has-error" ); }, 5000);
+          break;
+        case 'rewrite_password': 
+          $( "#form_group_rewrite_password").addClass( "has-error" );
+          setTimeout( function(){ $( "#form_group_rewrite_password").removeClass( "has-error" ); }, 5000);
+          break;
+      }      
+      return false;
+    }
+  }
+  if ( ($('#new_password').val().trim()) != ($('#rewrite_password').val().trim()) ) { 
+    alertify.error(NOT_MATCH_PASS);
+    $( "#rewrite_password").focus();
+    $( "#form_group_rewrite_password").addClass( "has-error" );
+    setTimeout( function(){ $( "#form_group_rewrite_password").removeClass( "has-error" ); }, 5000);
+    return false;
+  }
+
+  alertify.defaults.glossary.title = "<strong>"+CONFIRMATION_TITLE+"</strong>";
+  alertify.confirm(CONFIRMATION_TEXT, function (e) {
+           if (e) {
+             ajax_method(url, 'user', 'edit_password', 'result', 'modal_running_operation', 'close_modal_running_operation');
+           }
+  }).set('modal', true);  
+}

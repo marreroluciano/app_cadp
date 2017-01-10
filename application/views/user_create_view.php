@@ -31,7 +31,7 @@
         <div class="form-group form-group-sm" id="form_group_dni">
           <?=form_label('<small> DNI </small>', 'dni', $atr_label); ?>
           <div class="col-sm-8">            
-            <?php $atributes = array('type'=>'text', 'id' => 'dni', 'name' => 'dni', 'placeholder' => 'DNI', 'class' => 'form-control', 'maxlength' => 20); ?>
+            <?php $atributes = array('type'=>'text', 'id' => 'dni', 'name' => 'dni', 'placeholder' => 'Ingrese su DNI', 'class' => 'form-control', 'maxlength' => 20); ?>
             <?=form_input($atributes); ?>
           </div>
         </div>       
@@ -39,7 +39,7 @@
         <div class="form-group form-group-sm" id="form_group_email">
           <?=form_label('<small> Correo electr&oacute;nico </small>', 'email', $atr_label); ?>
           <div class="col-sm-8">
-            <?php $atributes = array('type'=>'email', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Correo electr&oacute;nico', 'class' => 'form-control', 'maxlength' => 50); ?>
+            <?php $atributes = array('type'=>'email', 'id' => 'email', 'name' => 'email', 'placeholder' => 'Ingrese su correo electr&oacute;nico', 'class' => 'form-control', 'maxlength' => 50); ?>
             <?=form_input($atributes); ?>
           </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="form-group form-group-sm" id="form_group_user">
           <?=form_label('<small> Usuario </small>', 'user', $atr_label); ?>
           <div class="col-sm-8">
-            <?php $atributes = array('type'=>'text', 'id' => 'user', 'name' => 'user', 'placeholder' => 'Nombre de usuario', 'class' => 'form-control', 'maxlength' => 10); ?>
+            <?php $atributes = array('type'=>'text', 'id' => 'user', 'name' => 'user', 'placeholder' => 'Ingrese un nombre de usuario', 'class' => 'form-control', 'maxlength' => 10); ?>
             <?=form_input($atributes); ?>
           </div>
         </div>
@@ -97,7 +97,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="close_modal_running_operation">&times;</button>
-        <h5 class="modal-title">Agregando el nuevo usuario, espere por favor...</h5>
+        <h5 class="modal-title"><?=CREATING_NEW_USER; ?></h5>
       </div>
       <div class="modal-body">
         <img src="<?php echo base_url()?>images/loading.gif" class="img-responsive center-block" alt="Procesando ...">

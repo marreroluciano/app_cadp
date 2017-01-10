@@ -19,11 +19,33 @@
     <div class="row">
       <div class="col-xs-6">
 
+        <div class="form-group form-group-sm" id="form_group_current_password">
+          <?=form_label('<small> Contrase&ntilde;a actual </small>', 'current_password', $atr_label); ?>
+          <div class="col-sm-8">
+            <?php $atributes = array('type'=>'password', 'id' => 'current_password', 'name' => 'current_password', 'placeholder' => 'Contrase&ntilde;a actual', 'class' => 'form-control', 'maxlength' => 10); ?>
+            <?=form_input($atributes); ?>
+          </div>
+        </div>
 
+        <div class="form-group form-group-sm" id="form_group_new_password">
+          <?=form_label('<small> Nueva contrase&ntilde;a </small>', 'new_password', $atr_label); ?>
+          <div class="col-sm-8">
+            <?php $atributes = array('type'=>'password', 'id' => 'new_password', 'name' => 'new_password', 'placeholder' => 'Nueva contrase&ntilde;a', 'class' => 'form-control', 'maxlength' => 10); ?>
+            <?=form_input($atributes); ?>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm" id="form_group_rewrite_password">
+          <?=form_label('<small> Reescribir contrase&ntilde;a </small>', 'rewrite_password', $atr_label); ?>
+          <div class="col-sm-8">
+            <?php $atributes = array('type'=>'password', 'id' => 'rewrite_password', 'name' => 'rewrite_password', 'placeholder' => 'Reescribir contrase&ntilde;a', 'class' => 'form-control', 'maxlength' => 10); ?>
+            <?=form_input($atributes); ?>
+          </div>
+        </div>
+        
       </div>
+
       <div class="col-xs-6">
-        
-        
       </div>
     </div>  
     

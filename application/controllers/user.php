@@ -110,5 +110,37 @@
         $this->load->view('layout_view', $datos_layout);
       }
     }
+
+    function edit_password(){
+      if ((empty($_POST ) != true) && ($this->user_model->isLogin())) {
+        $form = $this->input->post('form');
+        $user = $this->user_model->get_user($this->session->userdata['id']);
+
+        $password = $this->encrypt->decode($user[0]->pass);
+
+        if ($password != $form[0]['value']) {
+          $output = '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span>'.ERROR_EDITING_PASSWORD.'</div>';
+        } else {
+            $password = $this->encrypt->encode($form[1]['value']);
+            $data = array('pass' => $password);
+            $user_id = $this->user_model->edit_user($this->session->userdata['id'], $data);
+            if ($user_id > 0) {
+              $output = '<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up"></span>'.PASSWORD_EDITED_CORRECTLY.'</div>';
+            } else {
+              $output = '<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-thumbs-down"></span>'.ERROR_EDITING_PASSWORD.'</div>';
+            }
+        }
+
+        /* BOTON PARA REGRESAR */
+        $output .= '<div class="row">';
+        $output .= '<div class="col-xs-12">';
+        $output .= '<a href="'.base_url().'" type="button" class="btn btn-success" data-toggle="tooltip" title="Volver al listado"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Volver</a>';
+        $output .= '</div>';
+        $output .= '</div>';
+        echo $output;
+        //print_r('<pre>'); print_r($user); print_r('</pre>');
+        //print_r('<pre>'); print_r($form); print_r('</pre>');
+      } else { redirect('/error_404', 'refresh');}
+    }
   }
 ?> 
